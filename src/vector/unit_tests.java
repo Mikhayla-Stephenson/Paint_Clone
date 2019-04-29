@@ -1,3 +1,5 @@
+package vector;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class unit_tests {
