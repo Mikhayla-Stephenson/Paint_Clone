@@ -1,5 +1,6 @@
 package vector;
 
+import java.awt.*;
 import java.util.List;
 
 public interface Coord {
@@ -7,4 +8,5 @@ public interface Coord {
     double getY();
 
     List<Double> asList();
+    Dimension asDimension();
 }

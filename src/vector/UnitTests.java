@@ -7,16 +7,16 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class PointTest {
+class VectorPointTest {
     @Test
     void testToString() {
-        Point subject = new Point(0.232, 0.5343);
+        VectorPoint subject = new VectorPoint(0.232, 0.5343);
         assertEquals("0.2 0.5", subject.toString());
     }
 
     @Test
     void toList() {
-        Point subject = new Point(1.5, 3.5);
+        VectorPoint subject = new VectorPoint(1.5, 3.5);
         assertEquals(Arrays.asList(1.5, 3.5), subject.asList());
     }
 }
@@ -53,7 +53,7 @@ class ShapeTests {
             subject.addPoint(0.2, 0.3);
         } catch (ShapeError error) { fail("Exception when adding point"); }
 
-        subject.editPoint(0, new Point(0.6, 1.6));
+        subject.editPoint(0, new VectorPoint(0.6, 1.6));
 
         testPoints(0.6, 1.6, subject);
     }

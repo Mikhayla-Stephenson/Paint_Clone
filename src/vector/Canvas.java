@@ -12,14 +12,13 @@ public class Canvas {
     private boolean leftMouse;
     private Coord mouseLocation;
 
-
     public Canvas() {
         shapes = new LinkedList<>();
         selectedTool = Type.LINE;
     }
 
-    public VectorShape addShape(Type type, Point startingPoint) {
-        VectorShape shape = new VectorShape(type, startingPoint, currentPenColor, currentFillColor);
+    public VectorShape addShape(Type type, VectorPoint startingVectorPoint) {
+        VectorShape shape = new VectorShape(type, startingVectorPoint, currentPenColor, currentFillColor);
         shapes.add(shape);
         return shape;
     }
