@@ -12,13 +12,19 @@ public class VectorShape {
     private Color penColor;
     private LinkedList<Coord> coords;
 
-    public void addPoint(int x, int y) throws ShapeError{
+    public VectorShape() {
+        setFill(null);
+        setPen(Color.BLACK);
+        fillOn = false;
+    }
+
+    public void addPoint(double x, double y) throws ShapeError{
         if (coords.size() >= type.maxPoints) { throw new ShapeError("Exceeded max points"); }
 
         coords.push(new Coord(x, y));
     }
 
-    public void editPoint(int i, int x, int y) throws IndexOutOfBoundsException {
+    public void editPoint(int i, double x, double y) throws IndexOutOfBoundsException {
         coords.get(i).x = x;
         coords.get(i).y = y;
     }
@@ -29,12 +35,6 @@ public class VectorShape {
 
     public List<Coord> getPoints() {
         return this.coords;
-    }
-
-    public VectorShape() {
-        setFill(null);
-        setPen(Color.BLACK);
-        fillOn = false;
     }
 
     public boolean getFillOn() {

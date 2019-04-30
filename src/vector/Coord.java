@@ -2,10 +2,10 @@ package vector;
 
 public class Coord {
 
-    public float x;
-    public float y;
+    public double x;
+    public double y;
 
-    public Coord(int x, int y) {
+    public Coord(double x, double y) {
         x = x;
         y = y;
     }
