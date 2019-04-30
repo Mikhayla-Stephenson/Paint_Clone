@@ -5,11 +5,11 @@ public enum Type {
     ELIPS("ELLIPSE", 2),
     POLYGON("Polygon", 0);
 
-    public final String text;
+    public final String name;
     public final int maxPoints;
 
     Type(String text, int maxPoints) {
-        this.text = text;
+        this.name = text;
         this.maxPoints = maxPoints;
     }
  }
