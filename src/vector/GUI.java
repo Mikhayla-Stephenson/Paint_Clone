@@ -2,14 +2,13 @@ package vector;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.util.EventListener;
 
 public class GUI {
 
     JFrame frame;
+    JPanel mainPanel;
 
     GUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
@@ -17,6 +16,7 @@ public class GUI {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(700, 500));
         showMenuBar();
+        showToolPalette();
         frame.pack();
         frame.setVisible(true);
     }
@@ -55,11 +55,28 @@ public class GUI {
 
         menuBar.add(fileMenu);
         frame.setJMenuBar(menuBar);
-
     }
 
-    private void showToolpalette(){
+    private Button palletButton() {
+        Button output = new Button();
+        output.setPreferredSize(new Dimension(20,20));
+        return output;
+    }
 
+    private void showToolPalette(){
+        mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(Color.WHITE);
+        frame.add(mainPanel);
+        JPanel pallet = new JPanel();
+        pallet.setPreferredSize(new Dimension(50, 100));
+        pallet.add(palletButton());
+        pallet.add(palletButton());
+        pallet.add(palletButton());
+        pallet.add(palletButton());
+        pallet.add(palletButton());
+        pallet.add(palletButton());
+
+        mainPanel.add(pallet, BorderLayout.LINE_START);
     }
 
     private void showCanvase() {
