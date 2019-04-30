@@ -2,8 +2,11 @@ package vector;
 
 public enum Type {
     RECTANGLE("RECTANGLE", 2),
-    ELIPS("ELLIPSE", 2),
-    POLYGON("Polygon", 0);
+    ELLIPSE("ELLIPSE", 2),
+    POLYGON("Polygon", 0),
+    LINE("LINE", 2),
+    PLOT("PLOT", 1);
+
 
     public final String name;
     public final int maxPoints;

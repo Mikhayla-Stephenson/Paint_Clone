@@ -8,58 +8,65 @@ import java.util.List;
 
 public class VectorShape {
     private Type type;
-    private boolean fillOn;
     private Color fillColor;
     private Color penColor;
-    private LinkedList<Coord> coords;
+    private LinkedList<Point> points;
+
+    private void init(Type type, Color fillColor, Color penColor) {
+        this.fillColor = fillColor;
+        this.penColor = penColor;
+        this.type = type;
+        points = new LinkedList<>();
+    }
 
     public VectorShape(Type type) {
-        this.fillColor = null;
-        this.penColor = Color.BLACK;
-        this.fillOn = false;
-        this.type = type;
-        coords = new LinkedList<>();
+        init(type, null, Color.BLACK);
+    }
+
+    public VectorShape(Type type, Point startingPoint) {
+        init(type, null, Color.BLACK);
+        addPoint(startingPoint);
+    }
+
+    public VectorShape(Type type, Coord startingPoint, Color penColor, Color fillColor) {
+        init(type, fillColor, penColor);
+    }
+
+
+    public void addPoint(Point point) throws ShapeError {
+        if (type.maxPoints != 0 && points.size() >= type.maxPoints ) { throw new ShapeError("Exceeded max points"); }
+
+        points.add(point);
     }
 
     public void addPoint(double x, double y) throws ShapeError{
-        if (coords.size() >= type.maxPoints) { throw new ShapeError("Exceeded max points"); }
-
-        coords.add(new Coord(x, y));
+        addPoint(new Point(x, y));
     }
 
-    public void editPoint(int i, double x, double y) throws IndexOutOfBoundsException {
-        coords.get(i).x = x;
-        coords.get(i).y = y;
+    public void editPoint(int i, Coord point) {
+        points.get(i).update(point);
     }
 
-    public void remove(int i) throws IndexOutOfBoundsException{
-        coords.remove(i);
+    public void remove(int i) {
+        points.remove(i);
     }
 
     public List<Double> asList() {
         ArrayList<Double> output = new ArrayList<>();
-        for (Coord coord : coords) {
-            output.addAll(coord.asList());
+        for (Point point : points) {
+            output.addAll(point.asList());
         }
         return output;
     }
 
-    public List<Coord> getPoints() {
-        return this.coords;
+    public List<Point> getPoints() {
+        return this.points;
     }
 
-    public Coord getPoint(int i) { return this.coords.get(i); }
+    public Coord getPoint(int i) { return this.points.get(i); }
 
     public Type getType() {
         return type;
-    }
-
-    public boolean getFillOn() {
-        return fillOn;
-    }
-
-    public void setFillON(boolean state) {
-        fillOn = state;
     }
 
     public void setFill(Color color) {
@@ -78,11 +85,34 @@ public class VectorShape {
         return penColor;
     }
 
-    public String toString() {
-        StringBuilder output = new StringBuilder(type.name);
-        for (Coord coord : getPoints() ) {
+    public String getPenRGB() {
+        return "#" + penColor.toString();
+    }
+
+    public  String getFillRGB() {
+        return "#" + fillColor.toString();
+    }
+
+    public String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
+        if (points.size() != type.maxPoints) {
+            throw new ShapeError("Invalid number of points");
+        }
+        StringBuilder output = new StringBuilder();
+
+        if (includePenColor) {
+            output.append(getPenRGB());
+            output.append('\n');
+        }
+        if (includeFillColor) {
+            output.append(getFillRGB());
+            output.append('\n');
+        }
+
+        output.append(type.name);
+
+        for (Point point : getPoints() ) {
             output.append(" ");
-            output.append(coord.toString());
+            output.append(point.toString());
         }
 
         return output.toString();

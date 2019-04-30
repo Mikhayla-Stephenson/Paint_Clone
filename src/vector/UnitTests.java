@@ -7,11 +7,17 @@ import java.util.Arrays;
 import static org.junit.jupiter.api.Assertions.*;
 
 
-class CoordTest {
+class PointTest {
     @Test
     void testToString() {
-        Coord subject = new Coord(0.232, 0.5343);
+        Point subject = new Point(0.232, 0.5343);
         assertEquals("0.2 0.5", subject.toString());
+    }
+
+    @Test
+    void toList() {
+        Point subject = new Point(1.5, 3.5);
+        assertEquals(Arrays.asList(1.5, 3.5), subject.asList());
     }
 }
 
@@ -25,20 +31,54 @@ class ShapeTests {
     void tearDown() {
     }
 
-    @Test
-    void addPoint() {
-        VectorShape subject = new VectorShape(Type.ELIPS);
-        try {
-            subject.addPoint(0.2,0.3);
-        }
-        catch (ShapeError error) { fail("Exception when adding point");}
-
-        assertEquals(0.2, subject.getPoint(0).x);
-        assertEquals(0.3, subject.getPoint(0).y);
-
+    void testPoints(double expectedX, double expectedY, VectorShape subject){
+        assertEquals(expectedX, subject.getPoint(0).getX());
+        assertEquals(expectedY, subject.getPoint(0).getY());
     }
 
-    void editPoints() {
+    @Test
+    void addPoint() {
+        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        try {
+            subject.addPoint(0.2,0.3);
+        } catch (ShapeError error) { fail("Exception when adding point");}
 
+        testPoints(0.2, 0.3, subject);
+    }
+
+    @Test
+    void editPoints() {
+        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        try {
+            subject.addPoint(0.2, 0.3);
+        } catch (ShapeError error) { fail("Exception when adding point"); }
+
+        subject.editPoint(0, new Point(0.6, 1.6));
+
+        testPoints(0.6, 1.6, subject);
+    }
+
+    @Test
+    void asList() {
+        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        try {
+            subject.addPoint(0.2,0.3);
+            subject.addPoint(3.5, 2.2);
+        } catch (ShapeError error) { fail("Exception when adding point");}
+
+        assertEquals(Arrays.asList(0.2, 0.3, 3.5, 2.2), subject.asList());
+    }
+
+    @Test
+    void testToString() {
+        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        try {
+            subject.addPoint(0.2,0.3);
+            subject.addPoint(3.5, 2.2);
+        } catch (ShapeError error) { fail("Exception when adding point");}
+
+        try {
+            assertEquals("ELLIPSE 0.2 0.3 3.5 2.2", subject.getVec(false, false));
+        } catch (ShapeError error) { fail(); }
     }
 }
