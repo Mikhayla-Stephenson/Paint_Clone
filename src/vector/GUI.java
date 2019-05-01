@@ -2,6 +2,7 @@ package vector;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Canvas;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
@@ -9,14 +10,19 @@ public class GUI {
 
     JFrame frame;
     JPanel mainPanel;
+    VectorCanvas canvas;
 
     GUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("VectorTool");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setPreferredSize(new Dimension(700, 500));
+        mainPanel = new JPanel(new BorderLayout());
+
         showMenuBar();
         showToolPalette();
+        showCanvas();
+
         frame.pack();
         frame.setVisible(true);
     }
@@ -64,8 +70,7 @@ public class GUI {
     }
 
     private void showToolPalette(){
-        mainPanel = new JPanel(new BorderLayout());
-        mainPanel.setBackground(Color.WHITE);
+
         frame.add(mainPanel);
         JPanel pallet = new JPanel();
         pallet.setPreferredSize(new Dimension(50, 100));
@@ -79,7 +84,8 @@ public class GUI {
         mainPanel.add(pallet, BorderLayout.LINE_START);
     }
 
-    private void showCanvase() {
-
+    private void showCanvas() {
+        canvas = new VectorCanvas();
+        mainPanel.add(canvas);
     }
 }
