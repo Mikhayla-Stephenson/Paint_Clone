@@ -8,5 +8,5 @@ public interface Coord {
     double getY();
 
     List<Double> asList();
-    Dimension asDimension();
+    Point asPoint(int canvasSideLength);
 }

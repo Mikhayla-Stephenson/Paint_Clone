@@ -25,8 +25,8 @@ public class VectorPoint implements Coord {
         y = newPoint.getY();
     }
 
-    public Dimension asDimension(int canvasSideLength) {
-        return new Dimension((int) x * canvasSideLength, (int) y * canvasSideLength);
+    public Point asPoint(int canvasSideLength) {
+        return new Point((int) x * canvasSideLength, (int) y * canvasSideLength);
     }
 
     public void update(double x, double y) {
@@ -37,6 +37,7 @@ public class VectorPoint implements Coord {
     public List<Double> asList() {
         return Arrays.asList(x, y);
     }
+
 
     public String toString() {
         return String.format("%.1f %.1f", this.x, this.y);
