@@ -12,7 +12,7 @@ public class VectorShape {
     private Color penColor;
     private LinkedList<VectorPoint> vectorPoints;
 
-    private void init(Type type, Color fillColor, Color penColor) {
+    private void init( Type type, Color fillColor, Color penColor) {
         this.fillColor = fillColor;
         this.penColor = penColor;
         this.type = type;
@@ -23,27 +23,26 @@ public class VectorShape {
         init(type, null, Color.BLACK);
     }
 
-    public VectorShape(Type type, VectorPoint startingVectorPoint) {
-        init(type, null, Color.BLACK);
-        addPoint(startingVectorPoint);
-    }
-
-    public VectorShape(Type type, Coord startingPoint, Color penColor, Color fillColor) {
+    public VectorShape(Type type, Point startingPoint, Color penColor, Color fillColor) {
         init(type, fillColor, penColor);
+        addPoint(startingPoint);
     }
 
+    public void draw(Graphics g, int size) {
+        type.draw(g, size, this);
+    }
 
-    public void addPoint(VectorPoint vectorPoint) throws ShapeError {
+    public void addPoint(Point vectorPoint) throws ShapeError {
         if (type.maxPoints != 0 && vectorPoints.size() >= type.maxPoints ) { throw new ShapeError("Exceeded max vectorPoints"); }
 
-        vectorPoints.add(vectorPoint);
+        vectorPoints.add(new VectorPoint(vectorPoint));
     }
 
     public void addPoint(double x, double y) throws ShapeError{
         addPoint(new VectorPoint(x, y));
     }
 
-    public void editPoint(int i, Coord point) {
+    public void editPoint(int i, Point point) {
         vectorPoints.get(i).update(point);
     }
 
@@ -53,7 +52,7 @@ public class VectorShape {
 
     public List<Double> asList() {
         ArrayList<Double> output = new ArrayList<>();
-        for (VectorPoint vectorPoint : vectorPoints) {
+        for (Point vectorPoint : vectorPoints) {
             output.addAll(vectorPoint.asList());
         }
         return output;
@@ -63,11 +62,8 @@ public class VectorShape {
         return this.vectorPoints;
     }
 
-    public Coord getPoint(int i) { return this.vectorPoints.get(i); }
+    public VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
 
-    public Type getType() {
-        return type;
-    }
 
     public void setFill(Color color) {
         fillColor = color;

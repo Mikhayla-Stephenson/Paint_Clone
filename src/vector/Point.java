@@ -3,10 +3,10 @@ package vector;
 import java.awt.*;
 import java.util.List;
 
-public interface Coord {
+public interface Point {
     double getX();
     double getY();
 
     List<Double> asList();
-    Point asPoint(int canvasSideLength);
+    java.awt.Point asPoint(int canvasSideLength);
 }

@@ -1,10 +1,9 @@
 package vector;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.List;
 
-public class VectorPoint implements Coord {
+public class VectorPoint implements Point {
     // Vector points refer to key points used in VectorShape.
 
     // x and y points on the plane
@@ -19,14 +18,19 @@ public class VectorPoint implements Coord {
         this.y = y;
     }
 
-    //Updates the point with values from any class the implements the Coord interface
-    public void update(Coord newPoint) {
+    public VectorPoint(Point point) {
+        this.x = point.getX();
+        this.y = point.getY();
+    }
+
+    //Updates the point with values from any class the implements the Point interface
+    public void update(Point newPoint) {
         x = newPoint.getX();
         y = newPoint.getY();
     }
 
-    public Point asPoint(int canvasSideLength) {
-        return new Point((int) x * canvasSideLength, (int) y * canvasSideLength);
+    public java.awt.Point asPoint(int canvasSideLength) {
+        return new java.awt.Point((int) x * canvasSideLength, (int) y * canvasSideLength);
     }
 
     public void update(double x, double y) {

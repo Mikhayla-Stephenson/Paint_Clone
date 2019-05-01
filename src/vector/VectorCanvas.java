@@ -18,18 +18,9 @@ public class VectorCanvas extends Canvas{
     private int sideWidth;
 
     public void paint(Graphics g) {
-
         for (VectorShape shape : shapes) {
-
+            shape.draw(g, sideWidth);
         }
-        g.drawString("Hello",40,40);
-        setBackground(Color.WHITE);
-        g.fillRect(130, 30,100, 80);
-        g.drawOval(30,130,50, 60);
-        setForeground(Color.RED);
-        g.fillOval(130,130,50, 60);
-        g.drawArc(30, 200, 40,50,90,60);
-        g.fillArc(30, 130, 40,50,180,40);
     }
 
     public VectorCanvas() {
@@ -43,8 +34,13 @@ public class VectorCanvas extends Canvas{
         return sideWidth;
     }
 
-    public VectorShape addShape(Type type, VectorPoint startingVectorPoint) {
-        VectorShape shape = new VectorShape(type, startingVectorPoint, currentPenColor, currentFillColor);
+    public VectorShape createShape() {
+        VectorShape s = new VectorShape(selectedTool, MouseObserver, currentFillColor, currentPenColor);
+        addShape(s);
+        return s;
+    }
+
+    public VectorShape addShape(VectorShape shape) {
         shapes.add(shape);
         return shape;
     }
@@ -61,7 +57,7 @@ public class VectorCanvas extends Canvas{
     }
 }
 
-class CanvasMouse implements MouseListener, MouseMotionListener, Coord {
+class CanvasMouse implements MouseListener, MouseMotionListener, Point {
 
     VectorCanvas vectorCanvas;
 
@@ -69,7 +65,9 @@ class CanvasMouse implements MouseListener, MouseMotionListener, Coord {
         vectorCanvas = c;
     }
 
-    public void mouseClicked(MouseEvent mouseEvent) { }
+    public void mouseClicked(MouseEvent mouseEvent) {
+        vectorCanvas.createShape();
+    }
 
     public void mousePressed(MouseEvent mouseEvent) { }
 
@@ -92,10 +90,10 @@ class CanvasMouse implements MouseListener, MouseMotionListener, Coord {
     public List<Double> asList() {
         return Arrays.asList(getX(), getY());
     }
-    public Point asPoint(int canvasSideLength) {
-        return new Point((int) getX() * canvasSideLength, (int) getY() * canvasSideLength);
+    public java.awt.Point asPoint(int canvasSideLength) {
+        return new java.awt.Point((int) getX() * canvasSideLength, (int) getY() * canvasSideLength);
     }
-    public Point asPoint() {
+    public java.awt.Point asPoint() {
         return asPoint(vectorCanvas.getSideWith());
     }
 }

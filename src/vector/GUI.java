@@ -73,6 +73,7 @@ public class GUI {
 
         frame.add(mainPanel);
         JPanel pallet = new JPanel();
+        pallet.setBackground(Color.lightGray);
         pallet.setPreferredSize(new Dimension(50, 100));
         pallet.add(palletButton());
         pallet.add(palletButton());
