@@ -1,8 +1,6 @@
 package vector;
 
 import java.awt.*;
-import java.lang.reflect.Executable;
-import java.util.concurrent.Executors;
 
 public enum Type {
     RECTANGLE("RECTANGLE", 2),
@@ -42,35 +40,35 @@ public enum Type {
     }
 
     private void drawEllipse(Graphics g, int size, VectorShape shape) {
-        java.awt.Point p1 = shape.getPoint(0).asPoint(size);
-        java.awt.Point p2 = shape.getPoint(1).asPoint(size);
+        java.awt.Point p1 = shape.getPoint(0).getAbsPoint(size);
+        java.awt.Point p2 = shape.getPoint(1).getAbsPoint(size);
         g.drawOval(p1.x, p1.y, p2.x, p2.y);
     }
 
 
     private void drawRectangle(Graphics g, int size, VectorShape shape) {
-        java.awt.Point p1 = shape.getPoint(0).asPoint(size);
-        java.awt.Point p2 = shape.getPoint(1).asPoint(size);
+        java.awt.Point p1 = shape.getPoint(0).getAbsPoint(size);
+        java.awt.Point p2 = shape.getPoint(1).getAbsPoint(size);
         g.drawRect(p1.x, p1.y, p2.x, p2.y);
     }
 
 
     private void drawPolygon(Graphics g, int size, VectorShape shape) {
-        java.awt.Point p1 = shape.getPoint(0).asPoint(size);
-        java.awt.Point p2 = shape.getPoint(1).asPoint(size);
+        java.awt.Point p1 = shape.getPoint(0).getAbsPoint(size);
+        java.awt.Point p2 = shape.getPoint(1).getAbsPoint(size);
 //        g.drawPolygon(p1.x, p1.y, p2.x, p2.y);
     }
 
 
     private void drawLine(Graphics g, int size, VectorShape shape) {
-        java.awt.Point p1 = shape.getPoint(0).asPoint(size);
-        java.awt.Point p2 = shape.getPoint(1).asPoint(size);
+        java.awt.Point p1 = shape.getPoint(0).getAbsPoint(size);
+        java.awt.Point p2 = shape.getPoint(1).getAbsPoint(size);
         g.drawLine(p1.x, p1.y, p2.x, p2.y);
     }
 
 
     private void drawPlot(Graphics g, int size, VectorShape shape) {
-        java.awt.Point p1 = shape.getPoint(0).asPoint(size);
+        java.awt.Point p1 = shape.getPoint(0).getAbsPoint(size);
         g.drawLine(p1.x, p1.y, p1.x, p1.y);
     }
 

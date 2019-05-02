@@ -8,5 +8,5 @@ public interface Point {
     double getY();
 
     List<Double> asList();
-    java.awt.Point asPoint(int canvasSideLength);
+    java.awt.Point getAbsPoint(int canvasSideLength);
 }

@@ -13,7 +13,8 @@ public class VectorPoint implements Point {
     public double getX() { return x; }
     public double getY() { return y; }
 
-    public VectorPoint(double x, double y) {
+    public VectorPoint(double x, double y) throws PointError {
+        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
         this.x = x;
         this.y = y;
     }
@@ -29,13 +30,14 @@ public class VectorPoint implements Point {
         y = newPoint.getY();
     }
 
-    public java.awt.Point asPoint(int canvasSideLength) {
-        return new java.awt.Point((int) x * canvasSideLength, (int) y * canvasSideLength);
-    }
-
-    public void update(double x, double y) {
+    public void update(double x, double y) throws PointError {
+        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
         this.x = x;
         this.y = y;
+    }
+
+    public java.awt.Point getAbsPoint(int canvasSideLength) {
+        return new java.awt.Point((int) (x * canvasSideLength), (int) (y * canvasSideLength));
     }
 
     public List<Double> asList() {

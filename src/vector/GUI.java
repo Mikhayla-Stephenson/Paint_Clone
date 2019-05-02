@@ -16,7 +16,7 @@ public class GUI {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("VectorTool");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(700, 500));
+        frame.setPreferredSize(new Dimension(700+20, 700));
         mainPanel = new JPanel(new BorderLayout());
 
         showMenuBar();
@@ -24,6 +24,7 @@ public class GUI {
         showCanvas();
 
         frame.pack();
+        canvas.setSideWidth(Math.min(mainPanel.getWidth(), mainPanel.getHeight()));
         frame.setVisible(true);
     }
 

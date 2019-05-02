@@ -11,8 +11,6 @@ import java.util.List;
 public class VectorCanvas extends Canvas{
     private List<VectorShape> shapes;  // List of all shapes on the vectorCanvas
     private Type selectedTool;
-    private Color currentPenColor;
-    private Color currentFillColor;
     private boolean leftMouse;  // True if the left mouse key is down
     private CanvasMouse MouseObserver;
     private int sideWidth;
@@ -20,6 +18,7 @@ public class VectorCanvas extends Canvas{
     public void paint(Graphics g) {
         for (VectorShape shape : shapes) {
             shape.draw(g, sideWidth);
+            System.out.println("hello");
         }
     }
 
@@ -28,14 +27,20 @@ public class VectorCanvas extends Canvas{
         selectedTool = Type.LINE;
         MouseObserver = new CanvasMouse();
         MouseObserver.attachCanvas(this);
+        setBackground(Color.WHITE);
+        setForeground(Color.BLACK);
     }
 
     public int getSideWith() {
         return sideWidth;
     }
 
+    public void setSideWidth(int sideWidth) {
+        this.sideWidth = sideWidth;
+    }
+
     public VectorShape createShape() {
-        VectorShape s = new VectorShape(selectedTool, MouseObserver, currentFillColor, currentPenColor);
+        VectorShape s = new VectorShape(selectedTool, MouseObserver, getBackground(), getForeground());
         addShape(s);
         return s;
     }
@@ -90,10 +95,10 @@ class CanvasMouse implements MouseListener, MouseMotionListener, Point {
     public List<Double> asList() {
         return Arrays.asList(getX(), getY());
     }
-    public java.awt.Point asPoint(int canvasSideLength) {
+    public java.awt.Point getAbsPoint(int canvasSideLength) {
         return new java.awt.Point((int) getX() * canvasSideLength, (int) getY() * canvasSideLength);
     }
     public java.awt.Point asPoint() {
-        return asPoint(vectorCanvas.getSideWith());
+        return getAbsPoint(vectorCanvas.getSideWith());
     }
 }

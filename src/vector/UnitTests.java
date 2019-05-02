@@ -2,38 +2,58 @@ package vector;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.Point;
 import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class VectorPointTest {
+
+    VectorPoint createSubject(double x, double y) {
+        try {
+            return new VectorPoint(x, y);
+        } catch (PointError error) {
+            fail("exception when creating VectorPoint");
+            return null;
+        }
+    }
+
+    @Test
+    void exceptionTest() {
+        VectorPoint subject = createSubject(0.1, 0.1);
+        assertThrows(PointError.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
+    }
+
     @Test
     void testToString() {
-        VectorPoint subject = new VectorPoint(0.232, 0.5343);
+        VectorPoint subject = createSubject(0.232, 0.5343);
         assertEquals("0.2 0.5", subject.toString());
     }
 
     @Test
     void toList() {
-        VectorPoint subject = new VectorPoint(1.5, 3.5);
-        assertEquals(Arrays.asList(1.5, 3.5), subject.asList());
+        VectorPoint subject = createSubject(0.3, 0.5);
+        assertEquals(Arrays.asList(0.3, 0.5), subject.asList());
+    }
+
+    @Test
+    void absPointTest() {
+        VectorPoint subject = createSubject(0.4, 0.1);
+        assertEquals(new Point(40, 10), subject.getAbsPoint(100));
     }
 }
 
 class ShapeTests {
-
-    @org.junit.jupiter.api.BeforeEach
-    void setUp() {
-    }
-
-    @org.junit.jupiter.api.AfterEach
-    void tearDown() {
-    }
-
     void testPoints(double expectedX, double expectedY, VectorShape subject){
         assertEquals(expectedX, subject.getPoint(0).getX());
         assertEquals(expectedY, subject.getPoint(0).getY());
+    }
+
+    @Test
+    void exceptionTest(){
+        assertThrows(PointError.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
+
     }
 
     @Test
@@ -51,11 +71,14 @@ class ShapeTests {
         VectorShape subject = new VectorShape(Type.ELLIPSE);
         try {
             subject.addPoint(0.2, 0.3);
-        } catch (ShapeError error) { fail("Exception when adding point"); }
+        } catch (ShapeError error) {
+            fail("Exception when adding point");
+        }
 
-        subject.editPoint(0, new VectorPoint(0.6, 1.6));
+        try { subject.editPoint(0, new VectorPoint(0.6, 0.3)); }
+        catch (PointError error) { }
 
-        testPoints(0.6, 1.6, subject);
+        testPoints(0.6, 0.3, subject);
     }
 
     @Test
@@ -63,10 +86,10 @@ class ShapeTests {
         VectorShape subject = new VectorShape(Type.ELLIPSE);
         try {
             subject.addPoint(0.2,0.3);
-            subject.addPoint(3.5, 2.2);
+            subject.addPoint(0.5, 0.2);
         } catch (ShapeError error) { fail("Exception when adding point");}
 
-        assertEquals(Arrays.asList(0.2, 0.3, 3.5, 2.2), subject.asList());
+        assertEquals(Arrays.asList(0.2, 0.3, 0.5, 0.2), subject.asList());
     }
 
     @Test
@@ -74,11 +97,11 @@ class ShapeTests {
         VectorShape subject = new VectorShape(Type.ELLIPSE);
         try {
             subject.addPoint(0.2,0.3);
-            subject.addPoint(3.5, 2.2);
+            subject.addPoint(0.5, 0.2);
         } catch (ShapeError error) { fail("Exception when adding point");}
 
         try {
-            assertEquals("ELLIPSE 0.2 0.3 3.5 2.2", subject.getVec(false, false));
+            assertEquals("ELLIPSE 0.2 0.3 0.5 0.2", subject.getVec(false, false));
         } catch (ShapeError error) { fail(); }
     }
 }

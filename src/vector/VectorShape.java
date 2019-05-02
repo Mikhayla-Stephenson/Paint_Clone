@@ -23,7 +23,7 @@ public class VectorShape {
         init(type, null, Color.BLACK);
     }
 
-    public VectorShape(Type type, Point startingPoint, Color penColor, Color fillColor) {
+    public VectorShape(Type type, Point startingPoint, Color penColor, Color fillColor)  {
         init(type, fillColor, penColor);
         addPoint(startingPoint);
     }
@@ -39,7 +39,11 @@ public class VectorShape {
     }
 
     public void addPoint(double x, double y) throws ShapeError{
-        addPoint(new VectorPoint(x, y));
+        try {
+            addPoint(new VectorPoint(x, y));
+        } catch (PointError error) {
+            throw new ShapeError("Invalid Shape size");
+        }
     }
 
     public void editPoint(int i, Point point) {
