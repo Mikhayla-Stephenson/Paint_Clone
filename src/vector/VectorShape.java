@@ -6,7 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public abstract class VectorShape  {
+abstract class VectorShape  {
     private Color fillColor;
     private Color penColor;
     private LinkedList<VectorPoint> vectorPoints;
@@ -17,24 +17,24 @@ public abstract class VectorShape  {
         vectorPoints = new LinkedList<>();
     }
 
-    public  VectorShape() {
+    VectorShape() {
         init(null, Color.BLACK);
     }
 
-    public VectorShape(Point startingPoint, Color penColor, Color fillColor)  {
+    VectorShape(Point startingPoint, Color penColor, Color fillColor)  {
         init(fillColor, penColor);
         addPoint(startingPoint);
     }
 
     abstract void draw(Graphics g, int size);
 
-    public void addPoint(Point vectorPoint) throws ShapeError {
-        if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max vectorPoints"); }
+    void addPoint(Point vectorPoint) throws ShapeError {
+        if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max VectorPoints"); }
 
         vectorPoints.add(new VectorPoint(vectorPoint));
     }
 
-    public void addPoint(double x, double y) throws ShapeError{
+    void addPoint(double x, double y) throws ShapeError{
         try {
             addPoint(new VectorPoint(x, y));
         } catch (PointError error) {
@@ -42,15 +42,15 @@ public abstract class VectorShape  {
         }
     }
 
-    public void editPoint(int i, Point point) {
+    void editPoint(int i, Point point) {
         vectorPoints.get(i).update(point);
     }
 
-    public void remove(int i) {
+    void remove(int i) {
         vectorPoints.remove(i);
     }
 
-    public List<Double> asList() {
+    List<Double> asList() {
         ArrayList<Double> output = new ArrayList<>();
         for (Point vectorPoint : vectorPoints) {
             output.addAll(vectorPoint.asList());
@@ -58,41 +58,39 @@ public abstract class VectorShape  {
         return output;
     }
 
-    public List<VectorPoint> getVectorPoints() {
+    List<VectorPoint> getVectorPoints() {
         return this.vectorPoints;
     }
 
-    public VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
+    VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
 
-    public abstract int getMaxPoints();
+    abstract int getMaxPoints();
 
-    public abstract String getName();
+    abstract String getName();
 
-    public void setFill(Color color) {
+    void setFill(Color color) {
         fillColor = color;
     }
 
-    public Color getFill() {
+    Color getFill() {
         return fillColor;
     }
 
-    public void setPen(Color color) {
+    void setPen(Color color) {
         penColor = color;
     }
 
-    public Color getPen() {
+    Color getPen() {
         return penColor;
     }
 
-    public String getPenRGB() {
-        return "#" + penColor.toString();
+    String getPenRGB() { return Util.getColorRGB(getPen()); }
+
+    String getFillRGB() {
+        return Util.getColorRGB(getFill());
     }
 
-    public  String getFillRGB() {
-        return "#" + fillColor.toString();
-    }
-
-    public String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
+    String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
         if (vectorPoints.size() != getMaxPoints()) {
             throw new ShapeError("Invalid number of vectorPoints");
         }

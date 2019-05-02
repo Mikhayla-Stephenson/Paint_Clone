@@ -11,13 +11,13 @@ public enum Type {
     public VectorShape getCls() {
         switch (this) {
             case RECTANGLE:
-//                return new Rectangle();
+                return new Rectangle();
             case ELLIPSE:
                 return new Ellipse();
 //            case POLYGON:
 //                return new Polygon();
-//            case LINE:
-//                return new Line();
+            case LINE:
+                return new Line();
 //            case PLOT:
 //                return new Plot();
             default:

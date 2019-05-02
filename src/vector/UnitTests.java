@@ -2,6 +2,7 @@ package vector;
 
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.awt.Point;
 import java.util.Arrays;
 
@@ -21,7 +22,6 @@ class VectorPointTest {
 
     @Test
     void exceptionTest() {
-        VectorPoint subject = createSubject(0.1, 0.1);
         assertThrows(PointError.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
     }
 
@@ -52,8 +52,11 @@ class ShapeTests {
 
     @Test
     void exceptionTest(){
-        assertThrows(PointError.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
-
+        VectorShape subject = new Ellipse();
+        assertThrows(ShapeError.class, () -> subject.addPoint(1.1,1.1), "Invalid Shape size");
+        subject.addPoint(0,0);
+        subject.addPoint(0.2,0.3);
+        assertThrows(ShapeError.class, () -> subject.addPoint(0.2,0.2), "Exceeded max VectorPoints");
     }
 
     @Test
@@ -93,7 +96,7 @@ class ShapeTests {
     }
 
     @Test
-    void testToString() {
+    void testGetVec() {
         VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2,0.3);
@@ -104,4 +107,25 @@ class ShapeTests {
             assertEquals("ELLIPSE 0.2 0.3 0.5 0.2", subject.getVec(false, false));
         } catch (ShapeError error) { fail(error.getMessage()); }
     }
+
+    @Test
+    void testGetPenRGB() {
+        VectorShape subject = new Ellipse();
+        subject.setFill(Color.BLUE);
+        assertEquals("#0000FF", subject.getFillRGB());
+    }
+}
+
+class CanvasTests {
+    @Test
+    void testCreateShape() {
+        VectorCanvas subject = new VectorCanvas();
+        subject.selectTool(Type.RECTANGLE);
+        assertEquals(subject.createShape().getClass(), Rectangle.class);
+        subject.selectTool(Type.ELLIPSE);
+        assertEquals(subject.createShape().getClass(), Ellipse.class);
+        subject.selectTool(Type.LINE);
+        assertEquals(subject.createShape().getClass(), Line.class);
+    }
+
 }

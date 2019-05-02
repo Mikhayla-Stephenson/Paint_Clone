@@ -18,11 +18,10 @@ public class VectorCanvas extends Canvas{
     public void paint(Graphics g) {
         for (VectorShape shape : shapes) {
             shape.draw(g, sideWidth);
-            System.out.println("hello");
         }
     }
 
-    public VectorCanvas() {
+    VectorCanvas() {
         shapes = new LinkedList<>();
         selectedTool = Type.LINE;
         MouseObserver = new CanvasMouse();
@@ -31,26 +30,27 @@ public class VectorCanvas extends Canvas{
         setForeground(Color.BLACK);
     }
 
-    public int getSideWith() {
+    int getSideWith() {
         return sideWidth;
     }
 
-    public void setSideWidth(int sideWidth) {
+    void setSideWidth(int sideWidth) {
         this.sideWidth = sideWidth;
     }
 
-    public VectorShape createShape() {
+    VectorShape createShape() {
         VectorShape s = selectedTool.getCls();
         addShape(s);
         return s;
     }
 
-    public VectorShape addShape(VectorShape shape) {
+    void addShape(VectorShape shape) {
         shapes.add(shape);
-        return shape;
     }
 
-    public void drag(VectorShape shape, int point) {
+    void selectTool(Type type) { selectedTool = type;}
+
+    void drag(VectorShape shape, int point) {
         while (leftMouse) {
             shape.editPoint(point, MouseObserver);
             try {
@@ -64,9 +64,9 @@ public class VectorCanvas extends Canvas{
 
 class CanvasMouse implements MouseListener, MouseMotionListener, Point {
 
-    VectorCanvas vectorCanvas;
+    private VectorCanvas vectorCanvas;
 
-    public void attachCanvas(VectorCanvas c) {
+    void attachCanvas(VectorCanvas c) {
         vectorCanvas = c;
     }
 

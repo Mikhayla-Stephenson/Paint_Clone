@@ -13,24 +13,24 @@ public class VectorPoint implements Point {
     public double getX() { return x; }
     public double getY() { return y; }
 
-    public VectorPoint(double x, double y) throws PointError {
+    VectorPoint(double x, double y) throws PointError {
         if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
         this.x = x;
         this.y = y;
     }
 
-    public VectorPoint(Point point) {
+    VectorPoint(Point point) {
         this.x = point.getX();
         this.y = point.getY();
     }
 
     //Updates the point with values from any class the implements the Point interface
-    public void update(Point newPoint) {
+    void update(Point newPoint) {
         x = newPoint.getX();
         y = newPoint.getY();
     }
 
-    public void update(double x, double y) throws PointError {
+    void update(double x, double y) throws PointError {
         if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
         this.x = x;
         this.y = y;
@@ -43,7 +43,6 @@ public class VectorPoint implements Point {
     public List<Double> asList() {
         return Arrays.asList(x, y);
     }
-
 
     public String toString() {
         return String.format("%.1f %.1f", this.x, this.y);
