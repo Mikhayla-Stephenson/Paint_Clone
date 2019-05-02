@@ -6,7 +6,7 @@ public class Rectangle extends BoxLikeShape {
 
     Rectangle() { }
 
-    Rectangle(Point startingPoint, Color penColor, Color fillColor) {
+    Rectangle(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 

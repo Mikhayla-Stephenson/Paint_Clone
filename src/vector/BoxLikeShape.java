@@ -7,7 +7,7 @@ public abstract class BoxLikeShape extends VectorShape {
     BoxLikeShape() {
     }
 
-    BoxLikeShape(Point startingPoint, Color penColor, Color fillColor) {
+    BoxLikeShape(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 
@@ -26,11 +26,11 @@ public abstract class BoxLikeShape extends VectorShape {
         int width = p2.x - p1.x;
         int height = p2.y - p1.y;
         if (getPen() != null) {
-            g.setColor(getPen());
+            g.setColor(getPen().asColor());
             drawPen(g, p1.x, p1.y, width, height);
         }
         if (getFill() != null) {
-            g.setColor(getFill());
+            g.setColor(getFill().asColor());
             drawFill(g, p1.x, p1.y, width, height);
         }
     }

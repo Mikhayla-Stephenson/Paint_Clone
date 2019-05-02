@@ -6,7 +6,7 @@ public class Line extends BoxLikeShape {
 
     Line() { }
 
-    Line(Point startingPoint, Color penColor, Color fillColor) {
+    Line(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 

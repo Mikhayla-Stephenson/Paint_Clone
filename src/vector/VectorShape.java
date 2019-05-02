@@ -7,21 +7,21 @@ import java.util.List;
 
 
 abstract class VectorShape  {
-    private Color fillColor;
-    private Color penColor;
+    private VectorColor fillColor;
+    private VectorColor penColor;
     private LinkedList<VectorPoint> vectorPoints;
 
-    private void init(Color fillColor, Color penColor) {
+    private void init(VectorColor fillColor, VectorColor penColor) {
         this.fillColor = fillColor;
         this.penColor = penColor;
         vectorPoints = new LinkedList<>();
     }
 
     VectorShape() {
-        init(null, Color.BLACK);
+        init(VectorColor.CLEAR, new VectorColor(0));
     }
 
-    VectorShape(Point startingPoint, Color penColor, Color fillColor)  {
+    VectorShape(Point startingPoint, VectorColor penColor, VectorColor fillColor)  {
         init(fillColor, penColor);
         addPoint(startingPoint);
     }
@@ -68,26 +68,26 @@ abstract class VectorShape  {
 
     abstract String getName();
 
-    void setFill(Color color) {
+    void setFill(VectorColor color) {
         fillColor = color;
     }
 
-    Color getFill() {
+    VectorColor getFill() {
         return fillColor;
     }
 
-    void setPen(Color color) {
+    void setPen(VectorColor color) {
         penColor = color;
     }
 
-    Color getPen() {
+    VectorColor getPen() {
         return penColor;
     }
 
-    String getPenRGB() { return Util.getColorRGB(getPen()); }
+    String getPenRGB() { return getPen().toString(); }
 
     String getFillRGB() {
-        return Util.getColorRGB(getFill());
+        return getFill().toString();
     }
 
     String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
@@ -97,10 +97,12 @@ abstract class VectorShape  {
         StringBuilder output = new StringBuilder();
 
         if (includePenColor) {
+            output.append("PEN ");
             output.append(getPenRGB());
             output.append('\n');
         }
         if (includeFillColor) {
+            output.append("FILL ");
             output.append(getFillRGB());
             output.append('\n');
         }

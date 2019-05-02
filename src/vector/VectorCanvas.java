@@ -26,8 +26,6 @@ public class VectorCanvas extends Canvas{
         selectedTool = Type.LINE;
         MouseObserver = new CanvasMouse();
         MouseObserver.attachCanvas(this);
-        setBackground(Color.WHITE);
-        setForeground(Color.BLACK);
     }
 
     int getSideWith() {
@@ -46,6 +44,10 @@ public class VectorCanvas extends Canvas{
 
     void addShape(VectorShape shape) {
         shapes.add(shape);
+    }
+
+    List<VectorShape> getShapes() {
+        return shapes;
     }
 
     void selectTool(Type type) { selectedTool = type;}

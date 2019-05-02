@@ -6,7 +6,7 @@ class Ellipse extends BoxLikeShape {
 
     Ellipse() { }
 
-    Ellipse(Point startingPoint, Color penColor, Color fillColor) {
+    Ellipse(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 

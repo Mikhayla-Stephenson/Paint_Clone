@@ -111,7 +111,7 @@ class ShapeTests {
     @Test
     void testGetPenRGB() {
         VectorShape subject = new Ellipse();
-        subject.setFill(Color.BLUE);
+        subject.setFill(new VectorColor(0xFF));
         assertEquals("#0000FF", subject.getFillRGB());
     }
 }
@@ -126,6 +126,29 @@ class CanvasTests {
         assertEquals(subject.createShape().getClass(), Ellipse.class);
         subject.selectTool(Type.LINE);
         assertEquals(subject.createShape().getClass(), Line.class);
+    }
+
+    @Test
+    void testWriteToFile() {
+        VectorCanvas subject = new VectorCanvas();
+        VectorShape shape = new Ellipse();
+        shape.addPoint(0.2, 0.2);
+        shape.addPoint(0.4, 0.4);
+        subject.addShape(shape);
+        subject.addShape(shape);
+        assertEquals("ELLIPSE 0.2 0.2 0.4 0.4\nELLIPSE 0.2 0.2 0.4 0.4\n", FileIO.getString(subject));
+    }
+
+    @Test
+    void writeToFileStarting() {
+        VectorCanvas subject = new VectorCanvas();
+        VectorShape shape = new Rectangle();
+        shape.addPoint(0.2, 0.2);
+        shape.addPoint(0.3,0.3);
+        shape.setFill(new VectorColor(0x334499));
+        shape.setPen(new VectorColor(0x005500));
+        subject.addShape(shape);
+        assertEquals("PEN #005500\nFILL #334499\nRECTANGLE 0.2 0.2 0.3 0.3\n", FileIO.getString(subject));
     }
 
 }
