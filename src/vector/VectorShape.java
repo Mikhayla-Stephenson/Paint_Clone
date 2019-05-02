@@ -6,34 +6,30 @@ import java.util.LinkedList;
 import java.util.List;
 
 
-public class VectorShape {
-    private Type type;
+public abstract class VectorShape  {
     private Color fillColor;
     private Color penColor;
     private LinkedList<VectorPoint> vectorPoints;
 
-    private void init( Type type, Color fillColor, Color penColor) {
+    private void init(Color fillColor, Color penColor) {
         this.fillColor = fillColor;
         this.penColor = penColor;
-        this.type = type;
         vectorPoints = new LinkedList<>();
     }
 
-    public VectorShape(Type type) {
-        init(type, null, Color.BLACK);
+    public  VectorShape() {
+        init(null, Color.BLACK);
     }
 
-    public VectorShape(Type type, Point startingPoint, Color penColor, Color fillColor)  {
-        init(type, fillColor, penColor);
+    public VectorShape(Point startingPoint, Color penColor, Color fillColor)  {
+        init(fillColor, penColor);
         addPoint(startingPoint);
     }
 
-    public void draw(Graphics g, int size) {
-        type.draw(g, size, this);
-    }
+    abstract void draw(Graphics g, int size);
 
     public void addPoint(Point vectorPoint) throws ShapeError {
-        if (type.maxPoints != 0 && vectorPoints.size() >= type.maxPoints ) { throw new ShapeError("Exceeded max vectorPoints"); }
+        if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max vectorPoints"); }
 
         vectorPoints.add(new VectorPoint(vectorPoint));
     }
@@ -68,6 +64,9 @@ public class VectorShape {
 
     public VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
 
+    public abstract int getMaxPoints();
+
+    public abstract String getName();
 
     public void setFill(Color color) {
         fillColor = color;
@@ -94,7 +93,7 @@ public class VectorShape {
     }
 
     public String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
-        if (vectorPoints.size() != type.maxPoints) {
+        if (vectorPoints.size() != getMaxPoints()) {
             throw new ShapeError("Invalid number of vectorPoints");
         }
         StringBuilder output = new StringBuilder();
@@ -108,7 +107,7 @@ public class VectorShape {
             output.append('\n');
         }
 
-        output.append(type.name);
+        output.append(getName());
 
         for (VectorPoint vectorPoint : getVectorPoints() ) {
             output.append(" ");

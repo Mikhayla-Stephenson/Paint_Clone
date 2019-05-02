@@ -40,7 +40,7 @@ public class VectorCanvas extends Canvas{
     }
 
     public VectorShape createShape() {
-        VectorShape s = new VectorShape(selectedTool, MouseObserver, getBackground(), getForeground());
+        VectorShape s = selectedTool.getCls();
         addShape(s);
         return s;
     }

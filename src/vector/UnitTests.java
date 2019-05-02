@@ -58,7 +58,7 @@ class ShapeTests {
 
     @Test
     void addPoint() {
-        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2,0.3);
         } catch (ShapeError error) { fail("Exception when adding point");}
@@ -68,7 +68,7 @@ class ShapeTests {
 
     @Test
     void editPoints() {
-        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2, 0.3);
         } catch (ShapeError error) {
@@ -83,7 +83,7 @@ class ShapeTests {
 
     @Test
     void asList() {
-        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2,0.3);
             subject.addPoint(0.5, 0.2);
@@ -94,7 +94,7 @@ class ShapeTests {
 
     @Test
     void testToString() {
-        VectorShape subject = new VectorShape(Type.ELLIPSE);
+        VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2,0.3);
             subject.addPoint(0.5, 0.2);
@@ -102,6 +102,6 @@ class ShapeTests {
 
         try {
             assertEquals("ELLIPSE 0.2 0.3 0.5 0.2", subject.getVec(false, false));
-        } catch (ShapeError error) { fail(); }
+        } catch (ShapeError error) { fail(error.getMessage()); }
     }
 }
