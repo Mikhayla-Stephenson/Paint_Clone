@@ -3,6 +3,9 @@ package vector;
 import java.awt.*;
 import java.util.List;
 
+/** An extension of {@link VectorShape} with 2 points
+ *
+ */
 public abstract class BoxLikeShape extends VectorShape {
 
     BoxLikeShape() {
@@ -18,8 +21,24 @@ public abstract class BoxLikeShape extends VectorShape {
 
     public int getMaxPoints() { return 2; }
 
+    /**
+     * Draws the shape outline to g
+     * @param g
+     * @param startX
+     * @param startY
+     * @param width
+     * @param height
+     */
     abstract void drawPen(Graphics g, int startX, int startY, int width, int height);
 
+    /**
+     * Draws the shape fill to g
+     * @param g
+     * @param startX
+     * @param startY
+     * @param width
+     * @param height
+     */
     abstract void drawFill(Graphics g, int startX, int startY, int width, int height);
 
     public void draw(Graphics g, int size) {

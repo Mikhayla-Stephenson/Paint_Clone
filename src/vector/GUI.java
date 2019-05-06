@@ -6,6 +6,10 @@ import java.awt.Canvas;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 
+/**
+ * GUI class controls the what is output to the window. It contains one canvas object that is read to
+ * determine what is printed to the window.
+ */
 public class GUI {
 
     JFrame frame;

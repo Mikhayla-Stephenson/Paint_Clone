@@ -8,13 +8,29 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Contains all data to be displayed to be displayed on the window. Extends Canvas.
+ * Contains all shapes created by user, the currently selected tool and the dimensions of the window.
+ * Example use.
+ * <pre>
+ * {@code
+ * VectorCanvas canvas = new VectorCanvas();
+ * canvas.selectTool(Type.RECTANGLE);
+ * canvas.createShape();
+ * }
+ * </pre>
+ */
 public class VectorCanvas extends Canvas{
-    private List<VectorShape> shapes;  // List of all shapes on the vectorCanvas
+    /** List of all shapes */
+    private List<VectorShape> shapes;
     private Type selectedTool;
-    private boolean leftMouse;  // True if the left mouse key is down
     private CanvasMouse MouseObserver;
     private int sideWidth;
 
+    /**
+     * Method required by Canvas class to be able to be printed to the window
+     * @param g Graphic
+     */
     public void paint(Graphics g) {
         for (VectorShape shape : shapes) {
             shape.draw(g, sideWidth);
@@ -36,32 +52,36 @@ public class VectorCanvas extends Canvas{
         this.sideWidth = sideWidth;
     }
 
+    /**
+     * Creates a shape given the value of {@link Type selectedTool} and adds it to the canvas
+     */
     VectorShape createShape() {
         VectorShape s = selectedTool.getCls();
         addShape(s);
         return s;
     }
 
+    /**
+     * Add {@link VectorShape shape} to canvas
+     * @param shape
+     */
     void addShape(VectorShape shape) {
         shapes.add(shape);
     }
 
+    /**
+     * Gets a list of {@link VectorShape shapes} on the canvas
+     * @return
+     */
     List<VectorShape> getShapes() {
         return shapes;
     }
 
+    /**
+     * gets {@link vector.Type currently selected tool}
+     * @param type
+     */
     void selectTool(Type type) { selectedTool = type;}
-
-    void drag(VectorShape shape, int point) {
-        while (leftMouse) {
-            shape.editPoint(point, MouseObserver);
-            try {
-                Thread.sleep((long) 60);
-            } catch (InterruptedException error) {
-                Thread.currentThread().interrupt();
-            }
-        }
-    }
 
     @Override
     public boolean equals(Object obj) {

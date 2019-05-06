@@ -52,7 +52,7 @@ public class VectorColor {
             VectorColor color = (VectorColor) obj;
             return (color.isActive() == isActive() && color.getRGB() == getRGB()) || (!color.isActive() && !isActive());
         } else {
-            return false;
+        return false;
         }
     }
 }

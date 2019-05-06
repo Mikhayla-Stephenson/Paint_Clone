@@ -3,6 +3,9 @@ package vector;
 import java.awt.*;
 import java.util.List;
 
+/**
+ * A {@link VectorShape}
+ */
 public class Rectangle extends BoxLikeShape {
 
     Rectangle() { }
