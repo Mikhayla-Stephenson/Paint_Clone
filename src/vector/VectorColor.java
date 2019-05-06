@@ -33,6 +33,10 @@ public class VectorColor {
         this.rgb = rgb;
     }
 
+    void setRgb(String rgb) {
+        setRgb(Integer.parseInt(rgb.split("#")[0]));
+    }
+
     public Color asColor() {
         return new Color(rgb);
     }

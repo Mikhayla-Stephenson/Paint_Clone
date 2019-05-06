@@ -1,6 +1,7 @@
 package vector;
 
 import java.awt.*;
+import java.util.List;
 
 public class Rectangle extends BoxLikeShape {
 
@@ -8,6 +9,10 @@ public class Rectangle extends BoxLikeShape {
 
     Rectangle(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
+    }
+
+    public Rectangle(List<VectorPoint> points) {
+        super(points);
     }
 
     String getName() { return "RECTANGLE"; }

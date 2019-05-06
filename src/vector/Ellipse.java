@@ -1,6 +1,7 @@
 package vector;
 
 import java.awt.*;
+import java.util.List;
 
 class Ellipse extends BoxLikeShape {
 
@@ -8,6 +9,10 @@ class Ellipse extends BoxLikeShape {
 
     Ellipse(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
+    }
+
+    public Ellipse(List<VectorPoint> points) {
+        super(points);
     }
 
     String getName() { return "ELLIPSE"; }

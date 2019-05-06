@@ -26,7 +26,18 @@ abstract class VectorShape  {
         addPoint(startingPoint);
     }
 
+    VectorShape(List<VectorPoint> points) {
+        init(VectorColor.CLEAR, new VectorColor(0));
+        addPoints(points);
+    }
+
     abstract void draw(Graphics g, int size);
+
+    void addPoints(List<VectorPoint> points) {
+        for (Point point: points ) {
+            addPoint(point);
+        }
+    }
 
     void addPoint(Point vectorPoint) throws ShapeError {
         if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max VectorPoints"); }

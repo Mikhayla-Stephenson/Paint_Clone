@@ -1,6 +1,7 @@
 package vector;
 
 import java.awt.*;
+import java.util.List;
 
 public abstract class BoxLikeShape extends VectorShape {
 
@@ -9,6 +10,10 @@ public abstract class BoxLikeShape extends VectorShape {
 
     BoxLikeShape(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
+    }
+
+    public BoxLikeShape(List<VectorPoint> points) {
+        super(points);
     }
 
     public int getMaxPoints() { return 2; }

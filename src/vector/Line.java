@@ -1,6 +1,7 @@
 package vector;
 
 import java.awt.*;
+import java.util.List;
 
 public class Line extends BoxLikeShape {
 
@@ -8,6 +9,10 @@ public class Line extends BoxLikeShape {
 
     Line(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
+    }
+
+    public Line(List<VectorPoint> points) {
+        super(points);
     }
 
     String getName() {
