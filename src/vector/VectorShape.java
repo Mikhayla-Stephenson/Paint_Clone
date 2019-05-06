@@ -116,4 +116,18 @@ abstract class VectorShape  {
 
         return output.toString();
     }
+
+    public String toString() {
+        return getVec(true, true);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VectorShape) {
+            VectorShape shape = (VectorShape) obj;
+            return getVectorPoints().containsAll(shape.getVectorPoints());
+        } else {
+            return false;
+        }
+    }
 }

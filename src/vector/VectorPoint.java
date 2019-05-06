@@ -47,4 +47,14 @@ public class VectorPoint implements Point {
     public String toString() {
         return String.format("%.1f %.1f", this.x, this.y);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VectorPoint) {
+            VectorPoint point = (VectorPoint) obj;
+            return point.getX() == getX() && point.getY() == getY();
+        } else {
+            return false;
+        }
+    }
 }

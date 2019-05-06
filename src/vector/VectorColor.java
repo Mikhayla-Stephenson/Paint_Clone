@@ -42,9 +42,13 @@ public class VectorColor {
         else { return "OFF"; }
     }
 
-    public boolean isEquals(VectorColor c) {
-        return (c.isActive() == isActive() && c.getRGB() == getRGB()) || (!c.isActive() && !isActive());
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VectorColor) {
+            VectorColor color = (VectorColor) obj;
+            return (color.isActive() == isActive() && color.getRGB() == getRGB()) || (!color.isActive() && !isActive());
+        } else {
+            return false;
+        }
     }
-
-
 }

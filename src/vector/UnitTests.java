@@ -4,7 +4,9 @@ import org.junit.jupiter.api.Test;
 
 import java.awt.*;
 import java.awt.Point;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -29,6 +31,13 @@ class VectorPointTest {
     void testToString() {
         VectorPoint subject = createSubject(0.232, 0.5343);
         assertEquals("0.2 0.5", subject.toString());
+    }
+
+    @Test
+    void equalsTest() {
+        VectorPoint subject1 = createSubject(0.2, 0.5);
+        VectorPoint subject2 = createSubject(0.2, 0.5);
+        assertEquals(subject1, subject2);
     }
 
     @Test
@@ -57,6 +66,17 @@ class ShapeTests {
         subject.addPoint(0,0);
         subject.addPoint(0.2,0.3);
         assertThrows(ShapeError.class, () -> subject.addPoint(0.2,0.2), "Exceeded max VectorPoints");
+    }
+
+    @Test
+    void equalsTest() {
+        Ellipse subject1 = new Ellipse();
+        subject1.addPoint(0.2,0.6);
+        subject1.addPoint(0.8,0.7);
+        Ellipse subject2 = new Ellipse();
+        subject2.addPoint(0.2,0.6);
+        subject2.addPoint(0.8,0.7);
+        assertEquals(subject1, subject2);
     }
 
     @Test
@@ -128,6 +148,31 @@ class CanvasTests {
         assertEquals(subject.createShape().getClass(), Line.class);
     }
 
+    VectorCanvas createEqualCanvas() {
+
+        VectorCanvas output = new VectorCanvas();
+        Ellipse shape1;
+        Rectangle shape2;
+        shape1 = new Ellipse();
+        shape1.addPoint(0.2,0.6);
+        shape1.addPoint(0.8,0.7);
+        shape2 = new Rectangle();
+        shape2.addPoint(0.1,0.9);
+        shape2.addPoint(0.3,0.2);
+        output.addShape(shape1);
+        output.addShape(shape2);
+
+        return output;
+    }
+
+    @Test
+    void equalsTest() {
+        VectorCanvas subject1 = createEqualCanvas();
+        VectorCanvas subject2 = createEqualCanvas();
+
+        assertEquals(subject1, subject2);
+    }
+
     @Test
     void testWriteToFile() {
         VectorCanvas subject = new VectorCanvas();
@@ -143,12 +188,49 @@ class CanvasTests {
     void writeToFileStarting() {
         VectorCanvas subject = new VectorCanvas();
         VectorShape shape = new Rectangle();
-        shape.addPoint(0.2, 0.2);
-        shape.addPoint(0.3,0.3);
+        shape.addPoint(0.1, 0.7);
+        shape.addPoint(0.3,0.2);
         shape.setFill(new VectorColor(0x334499));
         shape.setPen(new VectorColor(0x005500));
         subject.addShape(shape);
-        assertEquals("PEN #005500\nFILL #334499\nRECTANGLE 0.2 0.2 0.3 0.3\n", FileIO.getString(subject));
+        assertEquals("PEN #005500\nFILL #334499\nRECTANGLE 0.1 0.7 0.3 0.2\n", FileIO.getString(subject));
+    }
+
+
+    @Test
+    void parseShapeTest() {
+        List<VectorPoint> subject;
+        String testString = "RECTANGLE 0.2 0.2 0.2 0.2";
+        subject = FileIO.parseShape(testString.split(" "));
+        try {
+            assertEquals(Arrays.asList(new VectorPoint(0.2, 0.2), new VectorPoint(0.2, 0.2)), subject);
+        } catch (PointError e) {
+            fail();
+        }
+    }
+
+    @Test
+    void parseStringTest() {
+        VectorCanvas expected = new VectorCanvas();
+        VectorShape shape = new Rectangle();
+        try {
+            shape.addPoint(new VectorPoint(0.2, 0.2));
+            shape.addPoint(new VectorPoint(0.3, 0.8));
+            expected.addShape(shape);
+            expected.addShape(shape);
+        } catch (PointError e) {
+            fail();
+        }
+
+        VectorCanvas subject;
+        String testString = "RECTANGLE 0.2 0.2 0.3 0.8\n";
+        try {
+            subject = FileIO.parseString(Arrays.asList(testString, testString));
+            assertEquals(expected, subject);
+        } catch (CommandException error) {
+            System.out.println("Did not load file: " + error.getMessage());
+            fail("Command Error");
+        }
     }
 
 }

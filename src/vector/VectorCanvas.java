@@ -62,6 +62,16 @@ public class VectorCanvas extends Canvas{
             }
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof VectorCanvas) {
+            VectorCanvas canvas = (VectorCanvas) obj;
+            return canvas.getShapes().containsAll(getShapes());
+        } else {
+            return false;
+        }
+    }
 }
 
 class CanvasMouse implements MouseListener, MouseMotionListener, Point {
