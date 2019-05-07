@@ -1,21 +1,16 @@
-package vector;
+package vector.util;
+
+import vector.VectorCanvas;
+import vector.exception.UnknownCommandException;
+import vector.shape.Rectangle;
+import vector.shape.VectorShape;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class UnknownCommandException extends Exception {
-    public UnknownCommandException(String message) {
-        super(message);
-    }
+public class FileIO {
 
-    public UnknownCommandException() {
-        super();
-    }
-}
-
-class FileIO {
-
-    static String getString(VectorCanvas canvas) {
+    public static String getString(VectorCanvas canvas) {
         StringBuilder output = new StringBuilder();
         VectorColor penColor, fillColor;
         boolean includePen, includeFill;
@@ -32,7 +27,7 @@ class FileIO {
         return output.toString();
     }
 
-    static List<VectorPoint> parseShape(String[] parts) {
+    private static List<VectorPoint> parseShape(String[] parts) {
         ArrayList<VectorPoint> output = new ArrayList<>();
         for (int i = 1; i < parts.length; i+=2) {
             try {
@@ -42,7 +37,7 @@ class FileIO {
         return output;
     }
 
-    static VectorCanvas parseString(List<String> input) throws UnknownCommandException {
+    public static VectorCanvas parseString(List<String> input) throws UnknownCommandException {
         VectorColor penColor = new VectorColor(0);
         VectorColor fillColor = new VectorColor(0, false);
         VectorCanvas output = new VectorCanvas();
@@ -61,12 +56,12 @@ class FileIO {
                 case "RECTANGLE":
                     output.addShape(new Rectangle(parseShape(l)));
                     break;
-                case "Ellipse":
-                    output.addShape(new Ellipse(parseShape(l)));
-                    break;
-                case "Line":
-                    output.addShape(new Line(parseShape(l)));
-                    break;
+//                case "Ellipse":
+//                    output.addShape(new Ellipse(parseShape(l)));
+//                    break;
+//                case "Line":
+//                    output.addShape(new Line(parseShape(l)));
+//                    break;
                 case "\n":
                     break;
                 default:

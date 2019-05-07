@@ -2,7 +2,6 @@ package vector;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Canvas;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 

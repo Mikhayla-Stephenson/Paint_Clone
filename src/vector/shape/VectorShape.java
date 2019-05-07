@@ -1,6 +1,9 @@
-package vector;
+package vector.shape;
 
-import java.awt.*;
+
+import vector.util.*;
+
+import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +23,7 @@ import java.util.List;
  *     }
  * </pre>
  */
-abstract class VectorShape  {
+public abstract class VectorShape  {
     private VectorColor fillColor;
     private VectorColor penColor;
     private LinkedList<VectorPoint> vectorPoints;
@@ -36,16 +39,16 @@ abstract class VectorShape  {
         vectorPoints = new LinkedList<>();
     }
 
-    VectorShape() {
+    public VectorShape() {
         init(new VectorColor(0, false), new VectorColor(0));
     }
 
-    VectorShape(Point startingPoint, VectorColor penColor, VectorColor fillColor)  {
+    public VectorShape(vector.util.Point startingPoint, VectorColor penColor, VectorColor fillColor)  {
         init(fillColor, penColor);
         addPoint(startingPoint);
     }
 
-    VectorShape(List<VectorPoint> points) {
+    public VectorShape(List<VectorPoint> points) {
         init(new VectorColor(0, false), new VectorColor(0));
         addPoints(points);
     }
@@ -55,22 +58,22 @@ abstract class VectorShape  {
      * @param g graphic created by canvas in the paint phase. Shape will be drawn to this graphic.
      * @param size size of canvas.
      */
-    abstract void draw(Graphics g, int size);
+    public abstract void draw(Graphics g, int size);
 
 
-    void addPoints(List<VectorPoint> points) {
-        for (Point point: points ) {
+    public void addPoints(List<VectorPoint> points) {
+        for (vector.util.Point point: points ) {
             addPoint(point);
         }
     }
 
-    void addPoints(VectorPoint... points) {
-        for (Point point: points ) {
+    public void addPoints(VectorPoint... points) {
+        for (vector.util.Point point: points ) {
             addPoint(point);
         }
     }
 
-    void addPoint(Point vectorPoint) throws IllegalStateException {
+    public void addPoint(vector.util.Point vectorPoint) throws IllegalStateException {
         if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) {
             throw new IllegalStateException("Exceeded max VectorPoints");
         }
@@ -84,7 +87,7 @@ abstract class VectorShape  {
      * @param y vertical component
      * @throws IllegalArgumentException
      */
-    void addPoint(double x, double y) throws IllegalArgumentException {
+    public void addPoint(double x, double y) throws IllegalArgumentException {
         addPoint(new VectorPoint(x, y));
     }
 
@@ -93,7 +96,7 @@ abstract class VectorShape  {
      * @param i the index of the point to update
      * @param point Point object
      */
-    void editPoint(int i, Point point) {
+    public void editPoint(int i, vector.util.Point point) {
         vectorPoints.get(i).update(point);
     }
 
@@ -101,7 +104,7 @@ abstract class VectorShape  {
      * Removes the ith point
      * @param i index of the point to remove
      */
-    void remove(int i) {
+    public void remove(int i) {
         vectorPoints.remove(i);
     }
 
@@ -109,7 +112,7 @@ abstract class VectorShape  {
      * Converts x and y of all points into a list
      * @return ArrayList of doubles, [x1, y1, x2, y2, x3, y3...].
      */
-    List<Double> asList() {
+    public List<Double> asList() {
         ArrayList<Double> output = new ArrayList<>();
         for (Point vectorPoint : vectorPoints) {
             output.addAll(vectorPoint.asList());
@@ -121,7 +124,7 @@ abstract class VectorShape  {
      * VectorPoints getter
      * @return ArrayList of VectorPoints
      */
-    List<VectorPoint> getVectorPoints() {
+    public List<VectorPoint> getVectorPoints() {
         return this.vectorPoints;
     }
 
@@ -130,54 +133,54 @@ abstract class VectorShape  {
      * @param i index of the point to get
      * @return the point at index i
      */
-    VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
+    public VectorPoint getPoint(int i) { return this.vectorPoints.get(i); }
 
     /**
      * The maximum number of points a shape can have, for example squares, ellipses and lines have two points,
      * however a polygon has no limit. (If there is no limit, this function returns 0.
      * @return Max number of points a shape can have
      */
-    abstract int getMaxPoints();
+    public abstract int getMaxPoints();
 
     /**
      * VEC command corresponding to this shape
      * @return name
      */
-    abstract String getName();
+    public abstract String getName();
 
 
-    void setFill(VectorColor color) {
+    public void setFill(VectorColor color) {
         fillColor.update(color);
     }
-    void setFill(int color) {fillColor.setRgb(color);}
+    public void setFill(int color) {fillColor.setRgb(color);}
 
-    VectorColor getFill() {
+    public VectorColor getFill() {
         return fillColor;
     }
 
-    boolean isFillActive() {
+    public boolean isFillActive() {
         return fillColor.isActive();
     }
 
-    void setFillActive(boolean fillActive) {
+    public void setFillActive(boolean fillActive) {
         fillColor.setActive(fillActive);
     }
 
-    void setPen(VectorColor color) {
+    public void setPen(VectorColor color) {
         penColor.update(color);
     }
-    void setPen(int color) {fillColor.setRgb(color);}
+    public void setPen(int color) {fillColor.setRgb(color);}
 
-    boolean isPenActive() {
+    public boolean isPenActive() {
         return fillColor.isActive();
     }
 
-    void setPenActive(boolean fillActive) {
+    public void setPenActive(boolean fillActive) {
         fillColor.setActive(fillActive);
     }
 
 
-    VectorColor getPen() {
+    public VectorColor getPen() {
         return penColor;
     }
 
@@ -186,14 +189,14 @@ abstract class VectorShape  {
      * For example if the pen color was red, this command would return "#ff0000"
      * @return rgb string of color
      */
-    String getPenRGB() { return getPen().toString(); }
+    public String getPenRGB() { return getPen().toString(); }
 
     /**
      * Returns a RGB string representation of the pen color.
      * For example if the pen color was red, this command would return "#ff0000"
      * @return rgb string of color
      */
-    String getFillRGB() {
+    public String getFillRGB() {
         return getFill().toString();
     }
 
@@ -204,7 +207,7 @@ abstract class VectorShape  {
      * @return String containing VEC
      * @throws IllegalStateException
      */
-    String getVec(boolean includePenColor, boolean includeFillColor) throws IllegalStateException {
+    public String getVec(boolean includePenColor, boolean includeFillColor) throws IllegalStateException {
         if (vectorPoints.size() != getMaxPoints()) {
             throw new IllegalStateException("Invalid number of VectorPoints");
         }

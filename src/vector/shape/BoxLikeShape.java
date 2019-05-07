@@ -1,6 +1,8 @@
-package vector;
+package vector.shape;
 
-import java.awt.*;
+import vector.util.*;
+
+import java.awt.Graphics;
 import java.util.List;
 
 /** An extension of {@link VectorShape} with 2 points
@@ -11,7 +13,7 @@ public abstract class BoxLikeShape extends VectorShape {
     BoxLikeShape() {
     }
 
-    BoxLikeShape(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
+    BoxLikeShape(vector.util.Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 

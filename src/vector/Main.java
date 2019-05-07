@@ -1,5 +1,9 @@
 package vector;
 
+import vector.shape.Rectangle;
+import vector.shape.VectorShape;
+import vector.util.VectorColor;
+
 public class Main {
     public static void main(String[] args) {
         GUI gui = new GUI();

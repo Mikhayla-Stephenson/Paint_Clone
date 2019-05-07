@@ -1,6 +1,9 @@
-package vector;
+package vector.util;
 
-public enum Type {
+import vector.shape.Rectangle;
+import vector.shape.VectorShape;
+
+public enum Tool {
     RECTANGLE,
     ELLIPSE,
     POLYGON,
@@ -12,12 +15,12 @@ public enum Type {
         switch (this) {
             case RECTANGLE:
                 return new Rectangle();
-            case ELLIPSE:
-                return new Ellipse();
+//            case ELLIPSE:
+//                return new Ellipse();
 //            case POLYGON:
 //                return new Polygon();
-            case LINE:
-                return new Line();
+//            case LINE:
+//                return new Line();
 //            case PLOT:
 //                return new Plot();
             default:

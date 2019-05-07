@@ -1,6 +1,5 @@
-package vector;
+package vector.util;
 
-import java.awt.*;
 import java.util.List;
 
 /**

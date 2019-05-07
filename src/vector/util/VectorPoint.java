@@ -1,4 +1,4 @@
-package vector;
+package vector.util;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,13 +13,13 @@ public class VectorPoint implements Point {
     public double getX() { return x; }
     public double getY() { return y; }
 
-    VectorPoint(double x, double y) throws IllegalArgumentException {
+    public VectorPoint(double x, double y) throws IllegalArgumentException {
         if (x > 1 || x < 0 || y > 1 || y < 0) { throw new IllegalArgumentException("Invalid point"); }
         this.x = x;
         this.y = y;
     }
 
-    VectorPoint(Point point) {
+    public VectorPoint(Point point) {
         this.x = point.getX();
         this.y = point.getY();
     }
@@ -28,7 +28,7 @@ public class VectorPoint implements Point {
      * Updates this point with the values of newPoint
      * @param newPoint
      */
-    void update(Point newPoint) {
+    public void update(Point newPoint) {
         x = newPoint.getX();
         y = newPoint.getY();
     }
@@ -39,7 +39,7 @@ public class VectorPoint implements Point {
      * @param y
      * @throws IllegalArgumentException Throws error if point is not between 0 and 1
      */
-    void update(double x, double y) throws IllegalArgumentException {
+    public void update(double x, double y) throws IllegalArgumentException {
         if (x > 1 || x < 0 || y > 1 || y < 0) { throw new IllegalArgumentException("Invalid point"); }
         this.x = x;
         this.y = y;
