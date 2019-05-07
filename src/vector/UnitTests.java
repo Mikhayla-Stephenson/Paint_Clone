@@ -10,6 +10,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+class UnitTests {
+
+}
 
 class VectorPointTest {
 
@@ -30,7 +33,7 @@ class VectorPointTest {
     @Test
     void testToString() {
         VectorPoint subject = createSubject(0.232, 0.5343);
-        assertEquals("0.2 0.5", subject.toString());
+        assertEquals("0.23 0.53", subject.toString());
     }
 
     @Test
@@ -124,7 +127,7 @@ class ShapeTests {
         } catch (ShapeError error) { fail("Exception when adding point");}
 
         try {
-            assertEquals("ELLIPSE 0.2 0.3 0.5 0.2", subject.getVec(false, false));
+            assertEquals("ELLIPSE 0.20 0.30 0.50 0.20", subject.getVec(false, false));
         } catch (ShapeError error) { fail(error.getMessage()); }
     }
 
@@ -181,7 +184,7 @@ class CanvasTests {
         shape.addPoint(0.4, 0.4);
         subject.addShape(shape);
         subject.addShape(shape);
-        assertEquals("ELLIPSE 0.2 0.2 0.4 0.4\nELLIPSE 0.2 0.2 0.4 0.4\n", FileIO.getString(subject));
+        assertEquals("ELLIPSE 0.20 0.20 0.40 0.40\nELLIPSE 0.20 0.20 0.40 0.40\n", FileIO.getString(subject));
     }
 
     @Test
@@ -193,14 +196,14 @@ class CanvasTests {
         shape.setFill(new VectorColor(0x334499));
         shape.setPen(new VectorColor(0x005500));
         subject.addShape(shape);
-        assertEquals("PEN #005500\nFILL #334499\nRECTANGLE 0.1 0.7 0.3 0.2\n", FileIO.getString(subject));
+        assertEquals("PEN #005500\nFILL #334499\nRECTANGLE 0.10 0.70 0.30 0.20\n", FileIO.getString(subject));
     }
 
 
     @Test
     void parseShapeTest() {
         List<VectorPoint> subject;
-        String testString = "RECTANGLE 0.2 0.2 0.2 0.2";
+        String testString = "RECTANGLE 0.20 0.20 0.20 0.20";
         subject = FileIO.parseShape(testString.split(" "));
         try {
             assertEquals(Arrays.asList(new VectorPoint(0.2, 0.2), new VectorPoint(0.2, 0.2)), subject);
@@ -223,7 +226,7 @@ class CanvasTests {
         }
 
         VectorCanvas subject;
-        String testString = "RECTANGLE 0.2 0.2 0.3 0.8\n";
+        String testString = "RECTANGLE 0.20 0.20 0.30 0.80\n";
         try {
             subject = FileIO.parseString(Arrays.asList(testString, testString));
             assertEquals(expected, subject);

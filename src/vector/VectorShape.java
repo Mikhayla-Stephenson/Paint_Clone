@@ -2,7 +2,6 @@ package vector;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -38,7 +37,7 @@ abstract class VectorShape  {
     }
 
     VectorShape() {
-        init(VectorColor.CLEAR, new VectorColor(0));
+        init(new VectorColor(0, false), new VectorColor(0));
     }
 
     VectorShape(Point startingPoint, VectorColor penColor, VectorColor fillColor)  {
@@ -47,7 +46,7 @@ abstract class VectorShape  {
     }
 
     VectorShape(List<VectorPoint> points) {
-        init(VectorColor.CLEAR, new VectorColor(0));
+        init(new VectorColor(0, false), new VectorColor(0));
         addPoints(points);
     }
 
@@ -65,13 +64,11 @@ abstract class VectorShape  {
         }
     }
 
-
     void addPoints(VectorPoint... points) {
         for (Point point: points ) {
             addPoint(point);
         }
     }
-
 
     void addPoint(Point vectorPoint) throws ShapeError {
         if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max VectorPoints"); }
@@ -150,34 +147,38 @@ abstract class VectorShape  {
      */
     abstract String getName();
 
-    /**
-     * Fill color setter
-     * @param color
-     */
-    void setFill(VectorColor color) {
-        fillColor = color;
-    }
 
-    /**
-     * Fill color getter
-     * @return
-     */
+    void setFill(VectorColor color) {
+        fillColor.update(color);
+    }
+    void setFill(int color) {fillColor.setRgb(color);}
+
     VectorColor getFill() {
         return fillColor;
     }
 
-    /**
-     * Pen color setter
-     * @param color
-     */
-    void setPen(VectorColor color) {
-        penColor = color;
+    boolean isFillActive() {
+        return fillColor.isActive();
     }
 
-    /**
-     * Pen color getter
-     * @return
-     */
+    void setFillActive(boolean fillActive) {
+        fillColor.setActive(fillActive);
+    }
+
+    void setPen(VectorColor color) {
+        penColor.update(color);
+    }
+    void setPen(int color) {fillColor.setRgb(color);}
+
+    boolean isPenActive() {
+        return fillColor.isActive();
+    }
+
+    void setPenActive(boolean fillActive) {
+        fillColor.setActive(fillActive);
+    }
+
+
     VectorColor getPen() {
         return penColor;
     }

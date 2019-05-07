@@ -24,6 +24,7 @@ public class VectorCanvas extends Canvas{
     /** List of all shapes */
     private List<VectorShape> shapes;
     private Type selectedTool;
+    private VectorColor selectedPenColor, selectedFillColor;
     private CanvasMouse MouseObserver;
     private int sideWidth;
 
@@ -38,6 +39,8 @@ public class VectorCanvas extends Canvas{
     }
 
     VectorCanvas() {
+        selectedFillColor = new VectorColor(0xffffff);
+        selectedPenColor = new VectorColor(0);
         shapes = new LinkedList<>();
         selectedTool = Type.LINE;
         MouseObserver = new CanvasMouse();
@@ -57,6 +60,8 @@ public class VectorCanvas extends Canvas{
      */
     VectorShape createShape() {
         VectorShape s = selectedTool.getCls();
+        s.setPen(selectedPenColor);
+        s.setFill(selectedFillColor);
         addShape(s);
         return s;
     }
@@ -75,6 +80,22 @@ public class VectorCanvas extends Canvas{
      */
     List<VectorShape> getShapes() {
         return shapes;
+    }
+
+    VectorColor getSelectedPenColor() {
+        return selectedPenColor;
+    }
+
+    void setSelectedPenColor(VectorColor color) {
+        selectedPenColor.update(color);
+    }
+
+    VectorColor getSelectedFillColor() {
+        return selectedFillColor;
+    }
+
+    void setSelectedFillColor(VectorColor color) {
+        selectedFillColor.update(color);
     }
 
     /**

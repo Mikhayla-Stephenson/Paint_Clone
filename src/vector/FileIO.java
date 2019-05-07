@@ -17,7 +17,7 @@ class FileIO {
         VectorColor penColor, fillColor;
         boolean includePen, includeFill;
         penColor = new VectorColor(0);
-        fillColor = VectorColor.CLEAR;
+        fillColor = new VectorColor(0, false);
         for (VectorShape shape: canvas.getShapes() ) {
             includePen = !penColor.equals(shape.getPen());
             includeFill = !fillColor.equals(shape.getFill());
@@ -41,7 +41,7 @@ class FileIO {
 
     static VectorCanvas parseString(List<String> input) throws CommandException {
         VectorColor penColor = new VectorColor(0);
-        VectorColor fillColor = VectorColor.CLEAR;
+        VectorColor fillColor = new VectorColor(0, false);
         VectorCanvas output = new VectorCanvas();
         VectorShape shape;
         for (String line: input) {
