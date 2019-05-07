@@ -70,8 +70,10 @@ abstract class VectorShape  {
         }
     }
 
-    void addPoint(Point vectorPoint) throws ShapeError {
-        if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) { throw new ShapeError("Exceeded max VectorPoints"); }
+    void addPoint(Point vectorPoint) throws IllegalStateException {
+        if (getMaxPoints() != 0 && vectorPoints.size() >= getMaxPoints() ) {
+            throw new IllegalStateException("Exceeded max VectorPoints");
+        }
 
         vectorPoints.add(new VectorPoint(vectorPoint));
     }
@@ -80,14 +82,10 @@ abstract class VectorShape  {
      * Creates a new VectorPoint with points x and y
      * @param x horizontal component
      * @param y vertical component
-     * @throws ShapeError
+     * @throws IllegalArgumentException
      */
-    void addPoint(double x, double y) throws ShapeError{
-        try {
-            addPoint(new VectorPoint(x, y));
-        } catch (PointError error) {
-            throw new ShapeError("Invalid Shape size");
-        }
+    void addPoint(double x, double y) throws IllegalArgumentException {
+        addPoint(new VectorPoint(x, y));
     }
 
     /**
@@ -204,11 +202,11 @@ abstract class VectorShape  {
      * @param includePenColor Whether to include the PEN command
      * @param includeFillColor Whether to include the FILL command
      * @return String containing VEC
-     * @throws ShapeError
+     * @throws IllegalStateException
      */
-    String getVec(boolean includePenColor, boolean includeFillColor) throws ShapeError {
+    String getVec(boolean includePenColor, boolean includeFillColor) throws IllegalStateException {
         if (vectorPoints.size() != getMaxPoints()) {
-            throw new ShapeError("Invalid number of vectorPoints");
+            throw new IllegalStateException("Invalid number of VectorPoints");
         }
         StringBuilder output = new StringBuilder();
 

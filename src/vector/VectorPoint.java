@@ -13,8 +13,8 @@ public class VectorPoint implements Point {
     public double getX() { return x; }
     public double getY() { return y; }
 
-    VectorPoint(double x, double y) throws PointError {
-        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
+    VectorPoint(double x, double y) throws IllegalArgumentException {
+        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new IllegalArgumentException("Invalid point"); }
         this.x = x;
         this.y = y;
     }
@@ -37,10 +37,10 @@ public class VectorPoint implements Point {
      * Updates point with x and y
      * @param x
      * @param y
-     * @throws PointError Throws error if point is not between 0 and 1
+     * @throws IllegalArgumentException Throws error if point is not between 0 and 1
      */
-    void update(double x, double y) throws PointError {
-        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new PointError("Invalid point"); }
+    void update(double x, double y) throws IllegalArgumentException {
+        if (x > 1 || x < 0 || y > 1 || y < 0) { throw new IllegalArgumentException("Invalid point"); }
         this.x = x;
         this.y = y;
     }

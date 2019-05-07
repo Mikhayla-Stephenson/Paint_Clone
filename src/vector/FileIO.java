@@ -1,12 +1,15 @@
 package vector;
 
-import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-class CommandException extends Exception {
-    public CommandException(String message) {
+class UnknownCommandException extends Exception {
+    public UnknownCommandException(String message) {
         super(message);
+    }
+
+    public UnknownCommandException() {
+        super();
     }
 }
 
@@ -34,12 +37,12 @@ class FileIO {
         for (int i = 1; i < parts.length; i+=2) {
             try {
                 output.add(new VectorPoint(Double.parseDouble(parts[i]), Double.parseDouble(parts[i+1])));
-            } catch (PointError e) { System.out.println("Eroror"); }
+            } catch (IllegalArgumentException e) { System.out.println("Error"); }
         }
         return output;
     }
 
-    static VectorCanvas parseString(List<String> input) throws CommandException {
+    static VectorCanvas parseString(List<String> input) throws UnknownCommandException {
         VectorColor penColor = new VectorColor(0);
         VectorColor fillColor = new VectorColor(0, false);
         VectorCanvas output = new VectorCanvas();
@@ -67,7 +70,7 @@ class FileIO {
                 case "\n":
                     break;
                 default:
-                    throw new CommandException("Unknown command:" + command);
+                    throw new UnknownCommandException("Unknown command:" + command);
 
             }
         }

@@ -3,8 +3,6 @@ package vector;
 import java.awt.*;
 
 public class VectorColor {
-    @Deprecated
-    static final VectorColor CLEAR = new VectorColor(0, false);
     private boolean active;
     private int rgb;
 

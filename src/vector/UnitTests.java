@@ -2,24 +2,19 @@ package vector;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.awt.Point;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class UnitTests {
-
-}
 
 class VectorPointTest {
 
     VectorPoint createSubject(double x, double y) {
         try {
             return new VectorPoint(x, y);
-        } catch (PointError error) {
+        } catch (IllegalArgumentException error) {
             fail("exception when creating VectorPoint");
             return null;
         }
@@ -27,7 +22,7 @@ class VectorPointTest {
 
     @Test
     void exceptionTest() {
-        assertThrows(PointError.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
+        assertThrows(IllegalArgumentException.class, () -> new VectorPoint(1.1, 0.2), "Invalid point");
     }
 
     @Test
@@ -65,10 +60,10 @@ class ShapeTests {
     @Test
     void exceptionTest(){
         VectorShape subject = new Ellipse();
-        assertThrows(ShapeError.class, () -> subject.addPoint(1.1,1.1), "Invalid Shape size");
+        assertThrows(IllegalArgumentException.class, () -> subject.addPoint(1.1,1.1), "Invalid Shape size");
         subject.addPoint(0,0);
         subject.addPoint(0.2,0.3);
-        assertThrows(ShapeError.class, () -> subject.addPoint(0.2,0.2), "Exceeded max VectorPoints");
+        assertThrows(IllegalStateException.class, () -> subject.addPoint(0.2,0.2), "Exceeded max VectorPoints");
     }
 
     @Test
@@ -87,7 +82,7 @@ class ShapeTests {
         VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2,0.3);
-        } catch (ShapeError error) { fail("Exception when adding point");}
+        } catch (IllegalArgumentException error) { fail("Exception when adding point");}
 
         testPoints(0.2, 0.3, subject);
     }
@@ -97,12 +92,12 @@ class ShapeTests {
         VectorShape subject = new Ellipse();
         try {
             subject.addPoint(0.2, 0.3);
-        } catch (ShapeError error) {
+        } catch (IllegalArgumentException error) {
             fail("Exception when adding point");
         }
 
         try { subject.editPoint(0, new VectorPoint(0.6, 0.3)); }
-        catch (PointError error) { }
+        catch (IllegalArgumentException error) { }
 
         testPoints(0.6, 0.3, subject);
     }
@@ -113,7 +108,7 @@ class ShapeTests {
         try {
             subject.addPoint(0.2,0.3);
             subject.addPoint(0.5, 0.2);
-        } catch (ShapeError error) { fail("Exception when adding point");}
+        } catch (IllegalArgumentException error) { fail("Exception when adding point");}
 
         assertEquals(Arrays.asList(0.2, 0.3, 0.5, 0.2), subject.asList());
     }
@@ -124,11 +119,11 @@ class ShapeTests {
         try {
             subject.addPoint(0.2,0.3);
             subject.addPoint(0.5, 0.2);
-        } catch (ShapeError error) { fail("Exception when adding point");}
+        } catch (IllegalArgumentException error) { fail("Exception when adding point");}
 
         try {
             assertEquals("ELLIPSE 0.20 0.30 0.50 0.20", subject.getVec(false, false));
-        } catch (ShapeError error) { fail(error.getMessage()); }
+        } catch (IllegalArgumentException error) { fail(error.getMessage()); }
     }
 
     @Test
@@ -207,7 +202,7 @@ class CanvasTests {
         subject = FileIO.parseShape(testString.split(" "));
         try {
             assertEquals(Arrays.asList(new VectorPoint(0.2, 0.2), new VectorPoint(0.2, 0.2)), subject);
-        } catch (PointError e) {
+        } catch (IllegalArgumentException e) {
             fail();
         }
     }
@@ -221,7 +216,7 @@ class CanvasTests {
             shape.addPoint(new VectorPoint(0.3, 0.8));
             expected.addShape(shape);
             expected.addShape(shape);
-        } catch (PointError e) {
+        } catch (IllegalArgumentException e) {
             fail();
         }
 
@@ -230,7 +225,7 @@ class CanvasTests {
         try {
             subject = FileIO.parseString(Arrays.asList(testString, testString));
             assertEquals(expected, subject);
-        } catch (CommandException error) {
+        } catch (UnknownCommandException error) {
             System.out.println("Did not load file: " + error.getMessage());
             fail("Command Error");
         }

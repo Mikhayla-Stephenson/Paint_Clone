@@ -1,7 +1,5 @@
 package vector;
 
-import java.awt.*;
-
 public class Main {
     public static void main(String[] args) {
         GUI gui = new GUI();
@@ -12,7 +10,7 @@ public class Main {
             e.setFill(new VectorColor(0));
             e.setPen(new VectorColor(0xFF0000));
             gui.canvas.addShape(e);
-        } catch (ShapeError error) { System.out.println("error"); }
+        } catch (IllegalArgumentException error) { System.out.println("error"); }
 
 
     }
