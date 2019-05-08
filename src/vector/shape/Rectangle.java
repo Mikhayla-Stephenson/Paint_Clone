@@ -1,13 +1,18 @@
-package vector;
+package vector.shape;
 
-import java.awt.*;
+import vector.util.*;
+import java.awt.Graphics;
 import java.util.List;
+import vector.util.Point;
 
+/**
+ * A {@link VectorShape}
+ */
 public class Rectangle extends BoxLikeShape {
 
-    Rectangle() { }
+    public Rectangle() { }
 
-    Rectangle(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
+    public Rectangle(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 
@@ -15,7 +20,7 @@ public class Rectangle extends BoxLikeShape {
         super(points);
     }
 
-    String getName() { return "RECTANGLE"; }
+    public String getName() { return "RECTANGLE"; }
 
     void drawFill(Graphics g, int startX, int startY, int width, int height) {
         g.fillRect(startX, startY, width, height);

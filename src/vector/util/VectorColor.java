@@ -1,19 +1,18 @@
-package vector;
+package vector.util;
 
-import java.awt.*;
+import java.awt.Color;
 
 public class VectorColor {
-    static final VectorColor CLEAR = new VectorColor(0, false);
     private boolean active;
     private int rgb;
 
-    VectorColor(int rgb) {
-        this.rgb = rgb;
+    public VectorColor(int rgb) {
+        setRgb(rgb);
         active = true;
     }
 
-    VectorColor(int rgb, boolean active) {
-        this.rgb = rgb;
+    public VectorColor(int rgb, boolean active) {
+        setRgb(rgb);
         this.active = active;
     }
 
@@ -30,15 +29,23 @@ public class VectorColor {
     }
 
     public void setRgb(int rgb) {
+        if (rgb < 0 || rgb > 0xffffff) {
+            throw new IllegalArgumentException("Color rgb outside of valid range");
+        }
         this.rgb = rgb;
     }
 
-    void setRgb(String rgb) {
+    public void setRgb(String rgb) {
         setRgb(Integer.parseInt(rgb.split("#")[0]));
     }
 
     public Color asColor() {
         return new Color(rgb);
+    }
+
+    public void update(VectorColor color) {
+        setRgb(color.getRGB());
+        setActive(color.isActive());
     }
 
     public String toString () {
@@ -51,8 +58,6 @@ public class VectorColor {
         if (obj instanceof VectorColor) {
             VectorColor color = (VectorColor) obj;
             return (color.isActive() == isActive() && color.getRGB() == getRGB()) || (!color.isActive() && !isActive());
-        } else {
-            return false;
-        }
+        } else { return false; }
     }
 }

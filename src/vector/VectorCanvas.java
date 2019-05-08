@@ -1,67 +1,110 @@
 package vector;
 
-import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
-import java.util.Arrays;
+import vector.shape.VectorShape;
+import vector.util.CanvasMouse;
+import vector.util.Tool;
+import vector.util.VectorColor;
+
+import java.awt.Canvas;
+import java.awt.Graphics;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Contains all data to be displayed to be displayed on the window. Extends Canvas.
+ * Contains all shapes created by user, the currently selected tool and the dimensions of the window.
+ * Example use.
+ * <pre>
+ * {@code
+ * VectorCanvas canvas = new VectorCanvas();
+ * canvas.selectTool(Tool.RECTANGLE);
+ * canvas.createShape();
+ * }
+ * </pre>
+ */
 public class VectorCanvas extends Canvas{
-    private List<VectorShape> shapes;  // List of all shapes on the vectorCanvas
-    private Type selectedTool;
-    private boolean leftMouse;  // True if the left mouse key is down
+    /** List of all shapes */
+    private List<VectorShape> shapes;
+    private Tool selectedTool;
+    private VectorColor selectedPenColor, selectedFillColor;
     private CanvasMouse MouseObserver;
     private int sideWidth;
 
+    /**
+     * Method required by Canvas class to be able to be printed to the window
+     * @param g Graphic
+     */
     public void paint(Graphics g) {
         for (VectorShape shape : shapes) {
             shape.draw(g, sideWidth);
         }
     }
 
-    VectorCanvas() {
+    public VectorCanvas() {
+        selectedFillColor = new VectorColor(0xffffff);
+        selectedPenColor = new VectorColor(0);
         shapes = new LinkedList<>();
-        selectedTool = Type.LINE;
+        selectedTool = Tool.LINE;
         MouseObserver = new CanvasMouse();
         MouseObserver.attachCanvas(this);
     }
 
-    int getSideWith() {
+    public int getSideWith() {
         return sideWidth;
     }
 
-    void setSideWidth(int sideWidth) {
+    public void setSideWidth(int sideWidth) {
         this.sideWidth = sideWidth;
     }
 
-    VectorShape createShape() {
+    /**
+     * Creates a shape given the value of {@link Tool selectedTool} and adds it to the canvas
+     */
+    public VectorShape createShape() {
         VectorShape s = selectedTool.getCls();
+        s.setPen(selectedPenColor);
+        s.setFill(selectedFillColor);
         addShape(s);
         return s;
     }
 
-    void addShape(VectorShape shape) {
+    /**
+     * Add {@link VectorShape shape} to canvas
+     * @param shape
+     */
+    public void addShape(VectorShape shape) {
         shapes.add(shape);
     }
 
-    List<VectorShape> getShapes() {
+    /**
+     * Gets a list of {@link VectorShape shapes} on the canvas
+     * @return
+     */
+    public List<VectorShape> getShapes() {
         return shapes;
     }
 
-    void selectTool(Type type) { selectedTool = type;}
-
-    void drag(VectorShape shape, int point) {
-        while (leftMouse) {
-            shape.editPoint(point, MouseObserver);
-            try {
-                Thread.sleep((long) 60);
-            } catch (InterruptedException error) {
-                Thread.currentThread().interrupt();
-            }
-        }
+    public VectorColor getSelectedPenColor() {
+        return selectedPenColor;
     }
+
+    public void setSelectedPenColor(VectorColor color) {
+        selectedPenColor.update(color);
+    }
+
+    public VectorColor getSelectedFillColor() {
+        return selectedFillColor;
+    }
+
+    public void setSelectedFillColor(VectorColor color) {
+        selectedFillColor.update(color);
+    }
+
+    /**
+     * gets {@link Tool currently selected tool}
+     * @param tool
+     */
+    public void selectTool(Tool tool) { selectedTool = tool;}
 
     @Override
     public boolean equals(Object obj) {
@@ -74,43 +117,3 @@ public class VectorCanvas extends Canvas{
     }
 }
 
-class CanvasMouse implements MouseListener, MouseMotionListener, Point {
-
-    private VectorCanvas vectorCanvas;
-
-    void attachCanvas(VectorCanvas c) {
-        vectorCanvas = c;
-    }
-
-    public void mouseClicked(MouseEvent mouseEvent) {
-        vectorCanvas.createShape();
-    }
-
-    public void mousePressed(MouseEvent mouseEvent) { }
-
-    public void mouseReleased(MouseEvent mouseEvent) { }
-
-    public void mouseEntered(MouseEvent mouseEvent) { }
-
-    public void mouseExited(MouseEvent mouseEvent) { }
-
-    public void mouseDragged(MouseEvent mouseEvent) { }
-
-    public void mouseMoved(MouseEvent mouseEvent) { }
-
-    public double getX() {
-        return MouseInfo.getPointerInfo().getLocation().x / vectorCanvas.getSideWith();
-    }
-    public double getY() {
-        return MouseInfo.getPointerInfo().getLocation().y / vectorCanvas.getSideWith();
-    }
-    public List<Double> asList() {
-        return Arrays.asList(getX(), getY());
-    }
-    public java.awt.Point getAbsPoint(int canvasSideLength) {
-        return new java.awt.Point((int) getX() * canvasSideLength, (int) getY() * canvasSideLength);
-    }
-    public java.awt.Point asPoint() {
-        return getAbsPoint(vectorCanvas.getSideWith());
-    }
-}

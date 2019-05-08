@@ -1,14 +1,19 @@
-package vector;
+package vector.shape;
 
-import java.awt.*;
+import vector.util.*;
+
+import java.awt.Graphics;
 import java.util.List;
 
+/** An extension of {@link VectorShape} with 2 points
+ *
+ */
 public abstract class BoxLikeShape extends VectorShape {
 
     BoxLikeShape() {
     }
 
-    BoxLikeShape(Point startingPoint, VectorColor penColor, VectorColor fillColor) {
+    BoxLikeShape(vector.util.Point startingPoint, VectorColor penColor, VectorColor fillColor) {
         super(startingPoint, penColor, fillColor);
     }
 
@@ -18,13 +23,29 @@ public abstract class BoxLikeShape extends VectorShape {
 
     public int getMaxPoints() { return 2; }
 
+    /**
+     * Draws the shape outline to g
+     * @param g
+     * @param startX
+     * @param startY
+     * @param width
+     * @param height
+     */
     abstract void drawPen(Graphics g, int startX, int startY, int width, int height);
 
+    /**
+     * Draws the shape fill to g
+     * @param g
+     * @param startX
+     * @param startY
+     * @param width
+     * @param height
+     */
     abstract void drawFill(Graphics g, int startX, int startY, int width, int height);
 
     public void draw(Graphics g, int size) {
         if (getVectorPoints().size() != getMaxPoints()) {
-            throw new ShapeError("Invalid number of points");
+            throw new IllegalArgumentException("Invalid number of points");
         }
         java.awt.Point p1 = getPoint(0).getAbsPoint(size);
         java.awt.Point p2 = getPoint(1).getAbsPoint(size);

@@ -1,23 +1,21 @@
-package vector;
+package vector.util;
 
-import java.awt.*;
+import vector.VectorCanvas;
+import vector.exception.UnknownCommandException;
+import vector.shape.Rectangle;
+import vector.shape.VectorShape;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class CommandException extends Exception {
-    public CommandException(String message) {
-        super(message);
-    }
-}
+public class FileIO {
 
-class FileIO {
-
-    static String getString(VectorCanvas canvas) {
+    public static String getString(VectorCanvas canvas) {
         StringBuilder output = new StringBuilder();
         VectorColor penColor, fillColor;
         boolean includePen, includeFill;
         penColor = new VectorColor(0);
-        fillColor = VectorColor.CLEAR;
+        fillColor = new VectorColor(0, false);
         for (VectorShape shape: canvas.getShapes() ) {
             includePen = !penColor.equals(shape.getPen());
             includeFill = !fillColor.equals(shape.getFill());
@@ -29,19 +27,19 @@ class FileIO {
         return output.toString();
     }
 
-    static List<VectorPoint> parseShape(String[] parts) {
+    private static List<VectorPoint> parseShape(String[] parts) {
         ArrayList<VectorPoint> output = new ArrayList<>();
         for (int i = 1; i < parts.length; i+=2) {
             try {
                 output.add(new VectorPoint(Double.parseDouble(parts[i]), Double.parseDouble(parts[i+1])));
-            } catch (PointError e) { System.out.println("Eroror"); }
+            } catch (IllegalArgumentException e) { System.out.println("Error"); }
         }
         return output;
     }
 
-    static VectorCanvas parseString(List<String> input) throws CommandException {
+    public static VectorCanvas parseString(List<String> input) throws UnknownCommandException {
         VectorColor penColor = new VectorColor(0);
-        VectorColor fillColor = VectorColor.CLEAR;
+        VectorColor fillColor = new VectorColor(0, false);
         VectorCanvas output = new VectorCanvas();
         VectorShape shape;
         for (String line: input) {
@@ -58,16 +56,16 @@ class FileIO {
                 case "RECTANGLE":
                     output.addShape(new Rectangle(parseShape(l)));
                     break;
-                case "Ellipse":
-                    output.addShape(new Ellipse(parseShape(l)));
-                    break;
-                case "Line":
-                    output.addShape(new Line(parseShape(l)));
-                    break;
+//                case "Ellipse":
+//                    output.addShape(new Ellipse(parseShape(l)));
+//                    break;
+//                case "Line":
+//                    output.addShape(new Line(parseShape(l)));
+//                    break;
                 case "\n":
                     break;
                 default:
-                    throw new CommandException("Unknown command:" + command);
+                    throw new UnknownCommandException("Unknown command:" + command);
 
             }
         }

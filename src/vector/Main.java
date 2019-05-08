@@ -1,6 +1,8 @@
 package vector;
 
-import java.awt.*;
+import vector.shape.Rectangle;
+import vector.shape.VectorShape;
+import vector.util.VectorColor;
 
 public class Main {
     public static void main(String[] args) {
@@ -12,7 +14,7 @@ public class Main {
             e.setFill(new VectorColor(0));
             e.setPen(new VectorColor(0xFF0000));
             gui.canvas.addShape(e);
-        } catch (ShapeError error) { System.out.println("error"); }
+        } catch (IllegalArgumentException error) { System.out.println("error"); }
 
 
     }
