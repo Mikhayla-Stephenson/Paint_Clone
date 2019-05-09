@@ -1,9 +1,13 @@
 package vector;
 
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.*;
+
 
 /**
  * GUI class controls the what is output to the window. It contains one canvas object that is read to
@@ -31,19 +35,44 @@ public class GUI {
         frame.setVisible(true);
     }
 
+    //Opens File Chooser - Open Dialog
+    //Currently chooses a file then prints out the directory path
     private void open() {
-        System.out.println("New");
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            System.out.println(file.toString());
+        }
     }
 
+    //Opens new blank window
+    //Currently not very useful, if you close one window, all close
     private void newFile() {
+        canvas = new VectorCanvas();
+        GUI untitled = new GUI();
+        System.out.println("new");
 
     }
 
+    //Opens File Chooser - Save Dialog
+    //Currently allows the user to insert a file name then prints out the directory path
     private void save() {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            System.out.println(file.toString());
+        }
 
     }
 
+    //Opens File Chooser - Save Dialog
+    //Currently allows the user to insert a file name then prints out the directory path
     private void saveAs() {
+        JFileChooser fileChooser = new JFileChooser();
+        if (fileChooser.showSaveDialog(null) == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+            System.out.println(file.toString());
+        }
 
     }
 
