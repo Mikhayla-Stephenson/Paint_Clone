@@ -19,17 +19,35 @@ public class CanvasMouse implements MouseListener, MouseMotionListener, Point {
 
     public void mouseClicked(MouseEvent mouseEvent) {
         vectorCanvas.createShape();
+        System.out.println("yeet");
+
     }
 
-    public void mousePressed(MouseEvent mouseEvent) { }
+    public void mousePressed(MouseEvent mouseEvent) {
+        if(vectorCanvas.createShape().getName().equals("LINE")){
+            asList();
+        }
+        if(vectorCanvas.createShape().getName().equals("RECTANGLE")){
+            asList();
+        }
+    }
 
-    public void mouseReleased(MouseEvent mouseEvent) { }
+    public void mouseReleased(MouseEvent mouseEvent) {
+        if(vectorCanvas.createShape().getName().equals("LINE")){
+            asList();
+        }
+        if(vectorCanvas.createShape().getName().equals("RECTANGLE")){
+            asList();
+        }
+    }
 
     public void mouseEntered(MouseEvent mouseEvent) { }
 
     public void mouseExited(MouseEvent mouseEvent) { }
 
-    public void mouseDragged(MouseEvent mouseEvent) { }
+    public void mouseDragged(MouseEvent mouseEvent) {
+
+    }
 
     public void mouseMoved(MouseEvent mouseEvent) { }
 

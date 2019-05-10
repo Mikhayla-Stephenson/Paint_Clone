@@ -1,5 +1,7 @@
 package vector;
 
+import vector.util.CanvasMouse; // Assessing interface for mouse event handlers
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionListener;
@@ -9,7 +11,7 @@ import java.awt.event.KeyEvent;
  * GUI class controls the what is output to the window. It contains one canvas object that is read to
  * determine what is printed to the window.
  */
-public class GUI {
+public class GUI extends CanvasMouse {
 
     JFrame frame;
     JPanel mainPanel;
@@ -78,112 +80,101 @@ public class GUI {
     }
 
     private Button[] shapeButton(){
-
-        Button plot = new Button("p");
-        plot.setPreferredSize(new Dimension(20,20));
-        Button line = new Button("l");
-        plot.setPreferredSize(new Dimension(20,20));
-        Button rectangle = new Button("r");
-        plot.setPreferredSize(new Dimension(20,20));
-        Button ellipse = new Button("e");
-        plot.setPreferredSize(new Dimension(20,20));
-        Button polygon = new Button("pn");
-        plot.setPreferredSize(new Dimension(20,20));
+        Button plot = new Button("PLOT");
+        plot.setPreferredSize(new Dimension(45,35));
+        Button line = new Button("LINE");
+        line.setPreferredSize(new Dimension(45,35));
+        Button rectangle = new Button("BOX");
+        rectangle.setPreferredSize(new Dimension(45,35));
+        Button ellipse = new Button("CIRCLE");
+        ellipse.setPreferredSize(new Dimension(45,35));
+        Button polygon = new Button("POLY");
+        polygon.setPreferredSize(new Dimension(45,35));
         Button[] shapeButtonArray = {plot, line, rectangle, ellipse, polygon};
        return shapeButtonArray;
     }
     private Button[] toolButton(){
-        Button zoom = new Button("z");
-        zoom.setPreferredSize(new Dimension(20,20));
-        Button undo = new Button("u");
-        undo.setPreferredSize(new Dimension(20,20));
-        Button[] toolButtonArray = {zoom, undo};
+        Button zoomPlus = new Button("PLUS");
+        zoomPlus.setPreferredSize(new Dimension(45,55));
+        Button zoomMinus = new Button("MINUS");
+        zoomMinus.setPreferredSize(new Dimension(45,55));
+        Button undo = new Button("UNDO");
+        undo.setPreferredSize(new Dimension(45,55));
+        Button[] toolButtonArray = {zoomPlus, zoomMinus, undo};
         return toolButtonArray;
     }
     private Button[] colourButton(){
-        Button pen = new Button("p");
-        pen.setPreferredSize(new Dimension(20,20));
-        Button fill = new Button("f");
-        fill.setPreferredSize(new Dimension(20,20));
-        Button[] colourButtonArray = {pen, fill};
+        Button pen = new Button("PEN");
+        pen.setPreferredSize(new Dimension(45,20));
+        Button fill = new Button("FILL");
+        fill.setPreferredSize(new Dimension(45,20));
+        Button picker = new Button("PICKER");
+        picker.setPreferredSize(new Dimension(45,20));
+        Button[] colourButtonArray = {pen, fill, picker};
         return colourButtonArray;
     }
-
 
     private void showToolPalette(){
 
         //frame.add(mainPanel);
-        JPanel pallet = new JPanel();
-        JPanel shapePallet = new JPanel();
+        JPanel pallet = new JPanel(new GridLayout(3,1));
+        JPanel shapePallet = new JPanel(  );
+        //shapePallet.setMaximumSize(new Dimension(500,100));
         JPanel toolPallet = new JPanel();
         JPanel colourPallet = new JPanel();
-JButton x = new JButton(new ImageIcon("octagon.png"));
 
         pallet.setBackground(Color.lightGray);
-        pallet.setLayout(new GridBagLayout());
+      //  pallet.setLayout(new GridBagLayout());
         GridBagConstraints palletConstraints = new GridBagConstraints();
-        //palletConstraints.fill = GridBagConstraints.HORIZONTAL;
+        pallet.setPreferredSize(new Dimension(50, 100));
 
-        pallet.setPreferredSize(new Dimension(55, 100));
-       // pallet.setSize(new Dimension(500,100));
-    //    shapePallet.setPreferredSize(new Dimension(50,100));
+
+        //shapePallet.setPreferredSize(new Dimension(50,100));
         shapePallet.setBackground(Color.BLACK);
+     //   shapePallet.setLayout(new GridLayout(5,1));
        // toolPallet.setPreferredSize(new Dimension(50,300));
         toolPallet.setBackground(Color.GREEN);
+      //  toolPallet.setLayout(new GridLayout(3,1));
        // colourPallet.setPreferredSize(new Dimension(50,300));
         colourPallet.setBackground(Color.RED);
+        //colourPallet.setLayout(new GridLayout(3,1));
 
-
-
-
-
-
-
-
-
-
+JButton x = new JButton();
+        JButton y = new JButton();
+        JButton z = new JButton();
+//shapePallet.add(x);
+//        toolPallet.add(y);
+//        colourPallet.add(z);
 
         for(Button button : shapeButton()){
             shapePallet.add(button);
         }
-
-
         for(Button button : toolButton()){
             toolPallet.add(button);
         }
-
-
         for(Button button : colourButton()){
             colourPallet.add(button);
         }
-
-        JButton xx = new JButton();
-        JButton y = new JButton();
-        JButton z = new JButton();
-
-
+      //  shapePallet.setPreferredSize(new Dimension(50,20));
         palletConstraints.fill = GridBagConstraints.VERTICAL;
         palletConstraints.gridx =0;
         palletConstraints.gridy =0 ;
-        palletConstraints.gridwidth = 40;
-        palletConstraints.gridheight = 30;
-        palletConstraints.weighty =0.5;
+      //  palletConstraints.ipady = 2;
+       // palletConstraints.weighty =0.5;
+//        palletConstraints.gridwidth = 50;
+      //  palletConstraints.gridheight = 2;
         pallet.add(shapePallet, palletConstraints);
 
-        palletConstraints.fill = GridBagConstraints.VERTICAL;
+      //  toolPallet.setPreferredSize(new Dimension(50,60));
+      //  palletConstraints.gridheight = 10;
         palletConstraints.gridx = 0;
-        palletConstraints.gridy = 50;
-        palletConstraints.weighty = 0.5;
-        palletConstraints.gridwidth = 50;
-        palletConstraints.gridheight = 30;
+        palletConstraints.gridy = 1;
+       // palletConstraints.gridheight = 2;
         pallet.add(toolPallet, palletConstraints);
-
-        palletConstraints.fill = GridBagConstraints.VERTICAL;
+     //   colourPallet.setPreferredSize(new Dimension(70,20));
         palletConstraints.gridx = 0;
-        palletConstraints.gridy = 700;
-        palletConstraints.weighty = 0.5;
-        palletConstraints.gridwidth = 50;
-        palletConstraints.gridheight = 30;
+        palletConstraints.gridy = 2;
+     //   palletConstraints.gridheight = 2;
         pallet.add(colourPallet, palletConstraints);
 
 /*     pallet.add(palletButton());
@@ -196,8 +187,13 @@ JButton x = new JButton(new ImageIcon("octagon.png"));
         //mainPanel.add(pallet, BorderLayout.EAST);
     }
 
-    private void showCanvas() {
+    public void showCanvas() {
+        CanvasMouse mouseEvent = new CanvasMouse(); // interface for mouse events
         canvas = new VectorCanvas();
         mainPanel.add(canvas);
+        attachCanvas(canvas); // specify canvas to be used
+        canvas.addMouseListener(mouseEvent); // listen for still mouse events
+        canvas.addMouseMotionListener(mouseEvent); // listen for moving mouse events
+
     }
 }
