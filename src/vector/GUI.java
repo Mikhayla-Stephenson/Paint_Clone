@@ -1,17 +1,22 @@
 package vector;
 
 import vector.util.CanvasMouse; // Assessing interface for mouse event handlers
-
+import vector.shape.*;
 import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import static java.awt.Color.*;
 
 /**
  * GUI class controls the what is output to the window. It contains one canvas object that is read to
  * determine what is printed to the window.
  */
-public class GUI extends CanvasMouse {
+public class GUI extends CanvasMouse  {
 
     JFrame frame;
     JPanel mainPanel;
@@ -21,7 +26,7 @@ public class GUI extends CanvasMouse {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("VectorTool");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setPreferredSize(new Dimension(700+20, 700));
+        frame.setPreferredSize(new Dimension(700+20, 800));
         frame.setLocation(970,50);
         frame.getContentPane().setLayout(new BorderLayout());
         mainPanel = new JPanel(new BorderLayout());
@@ -73,45 +78,65 @@ public class GUI extends CanvasMouse {
         frame.setJMenuBar(menuBar);
     }
 
-    private Button palletButton() {
-        Button output = new Button("");
+    private JButton palletButton() {
+        JButton output = new JButton("");
         output.setPreferredSize(new Dimension(20,20));
         return output;
     }
 
-    private Button[] shapeButton(){
-        Button plot = new Button("PLOT");
-        plot.setPreferredSize(new Dimension(45,35));
-        Button line = new Button("LINE");
-        line.setPreferredSize(new Dimension(45,35));
-        Button rectangle = new Button("BOX");
-        rectangle.setPreferredSize(new Dimension(45,35));
-        Button ellipse = new Button("CIRCLE");
-        ellipse.setPreferredSize(new Dimension(45,35));
-        Button polygon = new Button("POLY");
-        polygon.setPreferredSize(new Dimension(45,35));
-        Button[] shapeButtonArray = {plot, line, rectangle, ellipse, polygon};
-       return shapeButtonArray;
+    private JButton[] shapeButton(){
+        JButton plot = new JButton("PLOT");
+      //  plot.setPreferredSize(new Dimension(45,35));
+        JButton line = new JButton("LINE");
+     //   line.setPreferredSize(new Dimension(45,35));
+        JButton rectangle = new JButton("BOX");
+       // rectangle.setPreferredSize(new Dimension(45,35));
+        JButton ellipse = new JButton("CIRCLE");
+     //   ellipse.setPreferredSize(new Dimension(45,35));
+        JButton polygon = new JButton("POLY");
+       // polygon.setPreferredSize(new Dimension(45,35));
+        return new JButton[]{plot, line, rectangle, ellipse, polygon};
     }
-    private Button[] toolButton(){
-        Button zoomPlus = new Button("PLUS");
-        zoomPlus.setPreferredSize(new Dimension(45,55));
-        Button zoomMinus = new Button("MINUS");
-        zoomMinus.setPreferredSize(new Dimension(45,55));
-        Button undo = new Button("UNDO");
-        undo.setPreferredSize(new Dimension(45,55));
-        Button[] toolButtonArray = {zoomPlus, zoomMinus, undo};
-        return toolButtonArray;
+    private JButton[] toolButton(){
+        JButton zoomPlus = new JButton("PLUS");
+      //  zoomPlus.setPreferredSize(new Dimension(45,55));
+        JButton zoomMinus = new JButton("MINUS");
+       // zoomMinus.setPreferredSize(new Dimension(45,55));
+        JButton undo = new JButton("UNDO");
+      //  undo.setPreferredSize(new Dimension(45,55));
+        return new JButton[]{zoomPlus, zoomMinus, undo};
     }
-    private Button[] colourButton(){
-        Button pen = new Button("PEN");
-        pen.setPreferredSize(new Dimension(45,20));
-        Button fill = new Button("FILL");
-        fill.setPreferredSize(new Dimension(45,20));
-        Button picker = new Button("PICKER");
-        picker.setPreferredSize(new Dimension(45,20));
-        Button[] colourButtonArray = {pen, fill, picker};
-        return colourButtonArray;
+    private ArrayList<JButton> colourButton(){
+        Color[]colourBackground = { RED, BLUE, GREEN, WHITE, BLACK, YELLOW, ORANGE, PINK, CYAN, GRAY};//, blue, green, white, black, yellow, orange, pink, cyan, clear};
+
+        JButton pen = new JButton("PEN");
+       // pen.setPreferredSize(new Dimension(45,20));
+        JButton fill = new JButton("FILL");
+      //  fill.setPreferredSize(new Dimension(45,20));
+        JButton picker = new JButton("PICKER");
+      //  picker.setPreferredSize(new Dimension(45,20));
+        JButton red = new JButton();
+        JButton blue = new JButton();
+        JButton green = new JButton();
+        JButton white = new JButton();
+        JButton black = new JButton();
+        JButton yellow = new JButton();
+        JButton orange = new JButton();
+        JButton pink = new JButton();
+        JButton cyan= new JButton();
+        JButton clear = new JButton();
+
+        JButton[] colourNames = {red, blue, green, white, black, yellow, orange, pink, cyan, clear};
+        ArrayList<JButton> colourButtonArray = new ArrayList<>(Arrays.asList(pen,fill,picker));
+
+        int counter = 0;
+        for(JButton i : colourNames){
+            i.setPreferredSize(new Dimension(20,20));
+            i.setBackground(colourBackground[counter]);
+            colourButtonArray.add(i);
+            counter ++;
+        }
+       return colourButtonArray;
     }
 
     private void showToolPalette(){
@@ -136,7 +161,7 @@ public class GUI extends CanvasMouse {
         toolPallet.setBackground(Color.GREEN);
       //  toolPallet.setLayout(new GridLayout(3,1));
        // colourPallet.setPreferredSize(new Dimension(50,300));
-        colourPallet.setBackground(Color.RED);
+        colourPallet.setBackground(RED);
         //colourPallet.setLayout(new GridLayout(3,1));
 
 JButton x = new JButton();
@@ -146,13 +171,13 @@ JButton x = new JButton();
 //        toolPallet.add(y);
 //        colourPallet.add(z);
 
-        for(Button button : shapeButton()){
+        for(JButton button : shapeButton()){
             shapePallet.add(button);
         }
-        for(Button button : toolButton()){
+        for(JButton button : toolButton()){
             toolPallet.add(button);
         }
-        for(Button button : colourButton()){
+        for(JButton button : colourButton()){
             colourPallet.add(button);
         }
       //  shapePallet.setPreferredSize(new Dimension(50,20));
