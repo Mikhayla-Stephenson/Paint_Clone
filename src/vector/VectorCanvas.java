@@ -100,11 +100,16 @@ public class VectorCanvas extends Canvas{
         selectedFillColor.update(color);
     }
 
+
     /**
      * gets {@link Tool currently selected tool}
      * @param tool
      */
     public void selectTool(Tool tool) { selectedTool = tool;}
+
+    public Tool getselectTool(){
+        return selectedTool;
+    }
 
     @Override
     public boolean equals(Object obj) {
