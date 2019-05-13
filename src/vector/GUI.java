@@ -96,35 +96,37 @@ public class GUI extends CanvasMouse  {
     public void colourButtonFunctions (JButton button){
         System.out.println(button.getName());
 
+        Color colour = button.getBackground();
+        int r = colour.getRed();
+        int g = colour.getGreen();
+        int b = colour.getBlue();
+        int rgb = (r*65536)+(g*256)+b;
+
         if(button.getName().equals("pen")){
             penPressed = true;
             quickSelect = true;
         }
         else if(button.getName().equals("fill")){
             fillPressed = true;
+            quickSelect = true;
         }
         else{
             // error message to till user to click pen or fill first
         }
-        if(quickSelect && !button.getName().equals("pen")){
-            System.out.println(button.getBackground().toString());
-            Color colour = button.getBackground();
+        if (quickSelect) {
+            if(!button.getName().equals("pen")&& !button.getName().equals("fill")){
 
-            int r = colour.getRed();
-            int g = colour.getGreen();
-            int b = colour.getBlue();
-
-            int rgb = (r*65536)+(g*256)+b;
-
-            canvas.setSelectedPenColor(new VectorColor(rgb));
-            System.out.println(canvas.getSelectedPenColor().toString());
+                canvas.setSelectedPenColor(new VectorColor(rgb));
+                System.out.println(canvas.getSelectedPenColor().toString());
+              //  penPressed = false;
+            }
+            else if( fillPressed && !button.getName().equals("fill")&& !button.getName().equals("pen")){
+              //  canvas.setSelectedFillColor(new VectorColor(rgb));
+                System.out.println(canvas.getSelectedFillColor().toString());
+               // fillPressed = false;
+            }
         }
-
-
-
-
-
-
+       // quickSelect = false;
     }
 
 
@@ -158,12 +160,8 @@ public class GUI extends CanvasMouse  {
         return new JButton[]{zoomPlus, zoomMinus, undo};
     }
     public ArrayList<JButton> colourButton(){
-
-
         Color[]colourBackground = { RED, BLUE, GREEN, WHITE, BLACK, YELLOW, ORANGE, PINK, CYAN, GRAY};//, blue, green, white, black, yellow, orange, pink, cyan, clear};
-        System.out.println(colourBackground[0].getRGB());
-        String hex = "0x"+Integer.toHexString(colourBackground[0].getRGB()).substring(2).toUpperCase();
-        System.out.println(hex);
+
         JButton pen = new JButton("PEN");
         pen.setName("pen");
        // pen.setPreferredSize(new Dimension(45,20));
