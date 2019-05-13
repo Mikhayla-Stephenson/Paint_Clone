@@ -2,6 +2,8 @@ package vector;
 
 import vector.util.CanvasMouse; // Assessing interface for mouse event handlers
 import vector.shape.*;
+import vector.util.VectorColor;
+
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
@@ -22,7 +24,10 @@ public class GUI extends CanvasMouse  {
     JFrame frame;
     JPanel mainPanel;
     VectorCanvas canvas;
-    ArrayList<JButton> x = new ArrayList<>();
+    boolean penPressed = false;
+    boolean fillPressed = false;
+    boolean quickSelect = false;
+
     GUI() {
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("VectorTool");
@@ -82,21 +87,48 @@ public class GUI extends CanvasMouse  {
         button.addActionListener(e);
         return button;
     }
+    public void checkPressed(ArrayList<JButton> buttonArray){
+        for (JButton button : buttonArray){
+            addListener(button, (event) -> colourButtonFunctions(button));
+        }
+    }
 
     public void colourButtonFunctions (JButton button){
-       // button.getName()
-                System.out.println(button.getName());
-    }
+        System.out.println(button.getName());
 
-
-    public void setColour(ArrayList<JButton> buttonArray){
-      //  ArrayList<JButton> x = colourButton();
-        for (JButton button : buttonArray){
-            addListener(button, (event) -> colourButtonFunctions(button)  );
+        if(button.getName().equals("pen")){
+            penPressed = true;
+            quickSelect = true;
         }
-     //  return buttonArray;
+        else if(button.getName().equals("fill")){
+            fillPressed = true;
+        }
+        else{
+            // error message to till user to click pen or fill first
+        }
+        if(quickSelect && !button.getName().equals("pen")){
+            System.out.println(button.getBackground().toString());
+            Color colour = button.getBackground();
+
+            int r = colour.getRed();
+            int g = colour.getGreen();
+            int b = colour.getBlue();
+
+            int rgb = (r*65536)+(g*256)+b;
+
+            canvas.setSelectedPenColor(new VectorColor(rgb));
+            System.out.println(canvas.getSelectedPenColor().toString());
+        }
+
+
+
+
+
 
     }
+
+
+
     private JButton palletButton() {
         JButton output = new JButton("");
         output.setPreferredSize(new Dimension(20,20));
@@ -126,13 +158,20 @@ public class GUI extends CanvasMouse  {
         return new JButton[]{zoomPlus, zoomMinus, undo};
     }
     public ArrayList<JButton> colourButton(){
-        Color[]colourBackground = { RED, BLUE, GREEN, WHITE, BLACK, YELLOW, ORANGE, PINK, CYAN, GRAY};//, blue, green, white, black, yellow, orange, pink, cyan, clear};
 
+
+        Color[]colourBackground = { RED, BLUE, GREEN, WHITE, BLACK, YELLOW, ORANGE, PINK, CYAN, GRAY};//, blue, green, white, black, yellow, orange, pink, cyan, clear};
+        System.out.println(colourBackground[0].getRGB());
+        String hex = "0x"+Integer.toHexString(colourBackground[0].getRGB()).substring(2).toUpperCase();
+        System.out.println(hex);
         JButton pen = new JButton("PEN");
+        pen.setName("pen");
        // pen.setPreferredSize(new Dimension(45,20));
         JButton fill = new JButton("FILL");
+        fill.setName("fill");
       //  fill.setPreferredSize(new Dimension(45,20));
         JButton picker = new JButton("PICKER");
+        picker.setName("picker");
       //  picker.setPreferredSize(new Dimension(45,20));
         JButton red = new JButton();
         JButton blue = new JButton();
@@ -157,7 +196,7 @@ public class GUI extends CanvasMouse  {
             colourButtonArray.add(i);
             counter ++;
         }
-        setColour(colourButtonArray);
+        checkPressed(colourButtonArray);
 
         return colourButtonArray;
     }
