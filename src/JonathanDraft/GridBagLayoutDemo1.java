@@ -1,11 +1,11 @@
 /*
- * GridBagLayoutDemo.java is a 1.4 application that requires no other files.
+ * GridBagLayoutDemo1.java is a 1.4 application that requires no other files.
  */
 package JonathanDraft;
 import java.awt.*;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-public class GridBagLayoutDemo {
+public class GridBagLayoutDemo1 {
 
 
     public static void addComponentsToPane(Container pane) {
@@ -43,7 +43,7 @@ public class GridBagLayoutDemo {
 
     private static void createAndShowGUI() {
 //Create and set up the window.
-        JFrame frame = new JFrame("GridBagLayoutDemo");
+        JFrame frame = new JFrame("GridBagLayoutDemo1");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 //Set up the content pane.
