@@ -1,9 +1,7 @@
 package vector;
 
 import vector.util.CanvasMouse; // Assessing interface for mouse event handlers
-import vector.shape.*;
 import javax.swing.*;
-import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -19,7 +17,6 @@ import static java.awt.Color.*;
 public class GUI extends CanvasMouse  {
 
     JFrame frame;
-    JPanel mainPanel;
     VectorCanvas canvas;
 
     GUI() {
@@ -29,16 +26,12 @@ public class GUI extends CanvasMouse  {
         frame.setPreferredSize(new Dimension(700+20, 800));
         frame.setLocation(970,50);
         frame.getContentPane().setLayout(new BorderLayout());
-        mainPanel = new JPanel(new BorderLayout());
-
-        frame.getContentPane().add(mainPanel, BorderLayout.CENTER);
 
         showMenuBar();
         showToolPalette();
         showCanvas();
 
         frame.pack();
-        canvas.setSideWidth(Math.min(mainPanel.getWidth(), mainPanel.getHeight()));
         frame.setVisible(true);
     }
 
@@ -215,7 +208,9 @@ JButton x = new JButton();
     public void showCanvas() {
         CanvasMouse mouseEvent = new CanvasMouse(); // interface for mouse events
         canvas = new VectorCanvas();
-        mainPanel.add(canvas);
+
+        frame.getContentPane().add(canvas, BorderLayout.CENTER);
+        canvas.setSideWidth(500);
         attachCanvas(canvas); // specify canvas to be used
         canvas.addMouseListener(mouseEvent); // listen for still mouse events
         canvas.addMouseMotionListener(mouseEvent); // listen for moving mouse events

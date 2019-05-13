@@ -5,8 +5,8 @@ import vector.util.CanvasMouse;
 import vector.util.Tool;
 import vector.util.VectorColor;
 
-import java.awt.Canvas;
-import java.awt.Graphics;
+import javax.swing.*;
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,7 +22,7 @@ import java.util.List;
  * }
  * </pre>
  */
-public class VectorCanvas extends Canvas{
+public class VectorCanvas extends JPanel {
     /** List of all shapes */
     private List<VectorShape> shapes;
     private Tool selectedTool;
