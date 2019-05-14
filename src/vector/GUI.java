@@ -4,12 +4,14 @@ import vector.util.CanvasMouse; // Assessing interface for mouse event handlers
 import vector.util.Tool;
 import vector.util.VectorColor;
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 import static java.awt.Color.*;
 
@@ -20,6 +22,7 @@ import static java.awt.Color.*;
 public class GUI extends CanvasMouse  {
 
     JFrame frame;
+    JPanel mainFrame;
     VectorCanvas canvas;
     boolean penPressed = false;
     boolean fillPressed = false;
@@ -110,9 +113,9 @@ public class GUI extends CanvasMouse  {
             addListener(button, (event) -> colourButtonFunctions(button));
         }
     }
-    public void shapeButtonPressed(JButton[] buttonArray){
-        for (JButton button : buttonArray){
-            addListener(button, (event) -> shapeButtonFunctions(button));
+    public void shapeButtonPressed(HashMap<Tool, JButton> buttonArray){
+        for (Tool tool : buttonArray.keySet()){
+            addListener(buttonArray.get(tool), (event) -> shapeButtonFunctions(tool));
         }
     }
     public void colourButtonFunctions(JButton button){
@@ -152,15 +155,8 @@ public class GUI extends CanvasMouse  {
     }
 
 
-    public void shapeButtonFunctions(JButton button){
-        for (Tool tool : Tool.values()){
-            String x = tool.toString();
-           // System.out.println(button.getName());
-            if(x.equals(button.getName())){
-               // System.out.println("yeet");
-                canvas.selectTool(tool);
-            }
-        }
+    public void shapeButtonFunctions(Tool tool){
+        canvas.selectTool(tool);
         System.out.println(canvas.getselectTool());
     }
 
@@ -170,26 +166,14 @@ public class GUI extends CanvasMouse  {
         return output;
     }
 
-    private JButton[] shapeButton(){
-        JButton plot = new JButton("BOX");
-      //  plot.setPreferredSize(new Dimension(45,35));
-        JButton line = new JButton("CIRCLE");
-     //   line.setPreferredSize(new Dimension(45,35));
-        JButton rectangle = new JButton("POLY");
-       // rectangle.setPreferredSize(new Dimension(45,35));
-        JButton ellipse = new JButton("LINE");
-     //   ellipse.setPreferredSize(new Dimension(45,35));
-        JButton polygon = new JButton("PLOT");
-       // polygon.setPreferredSize(new Dimension(45,35));
-        JButton[] shapeButtonArray = {plot, line, rectangle, ellipse, polygon};
-        String[] shapeNames = {"RECTANGLE", "ELLIPSE", "POLYGON", "LINE","PLOT"};
-        int counter = 0;
-        for(JButton button : shapeButtonArray){
-            button.setName(shapeNames[counter]);
-            counter++;
+    private HashMap<Tool, JButton> shapeButton(){
+        HashMap<Tool, JButton> buttons = new HashMap<>();
+        for (Tool name : Tool.values()) {
+            buttons.put(name, new JButton(name.name()));
         }
-        shapeButtonPressed(shapeButtonArray);
-        return shapeButtonArray;
+
+        shapeButtonPressed(buttons);
+        return buttons;
     }
     private JButton[] toolButton(){
         JButton zoomPlus = new JButton("PLUS");
@@ -264,7 +248,7 @@ public class GUI extends CanvasMouse  {
         colourPallet.setBackground(RED);
         //colourPallet.setLayout(new GridLayout(3,1));
 
-        for(JButton button : shapeButton()){
+        for(JButton button : shapeButton().values()){
             shapePallet.add(button);
         }
         for(JButton button : toolButton()){
