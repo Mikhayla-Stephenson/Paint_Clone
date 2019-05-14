@@ -293,9 +293,14 @@ public class GUI extends CanvasMouse  {
     public void showCanvas() {
         CanvasMouse mouseEvent = new CanvasMouse(); // interface for mouse events
         canvas = new VectorCanvas();
+        mainFrame = new JPanel(new SpringLayout());
+        canvas.setBackground(WHITE);
+        canvas.setBorder(new LineBorder(BLACK));
 
-        frame.getContentPane().add(canvas, BorderLayout.CENTER);
-        canvas.setSideWidth(500);
+        canvas.setPreferredSize(new Dimension(500, 500));
+        mainFrame.add(canvas);
+        frame.add(mainFrame);
+//        canvas.setSideWidth(500);
         attachCanvas(canvas); // specify canvas to be used
         canvas.addMouseListener(mouseEvent); // listen for still mouse events
         canvas.addMouseMotionListener(mouseEvent); // listen for moving mouse events

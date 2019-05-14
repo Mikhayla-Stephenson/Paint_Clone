@@ -34,10 +34,11 @@ public class VectorCanvas extends JPanel {
      * Method required by Canvas class to be able to be printed to the window
      * @param g Graphic
      */
-    public void paint(Graphics g) {
+    public void paintChildren(Graphics g) {
         for (VectorShape shape : shapes) {
             shape.draw(g, sideWidth);
         }
+        g.dispose();
     }
 
     public VectorCanvas() {
